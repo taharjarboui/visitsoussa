@@ -30,6 +30,9 @@ export const sections = {
 
 export type SectionKey = keyof typeof sections;
 
+// Page « Histoire » rattachée à Découvrir : /fr/decouvrir/histoire, /en/discover/history…
+export const historyPath = { fr: 'histoire', en: 'history', ar: 'history' } as const;
+
 export const ui = {
   fr: {
     'site.name': 'Visit Soussa',
@@ -81,6 +84,11 @@ export const ui = {
     'footer.about': 'Qui sommes-nous ?',
     'footer.about.text': 'Visit Soussa est une initiative d’habitants qui aiment leur ville et veulent la faire connaître.',
     'footer.contact': 'Nous contacter',
+    'history.title': 'Histoire de Sousse',
+    'history.intro': 'De la cité phénicienne d’Hadrumète à la médina classée par l’UNESCO, trois mille ans d’histoire sur quelques kilomètres de côte.',
+    'history.teaser': 'Trois mille ans d’histoire, de la cité phénicienne à la médina d’aujourd’hui.',
+    'history.link': 'Toute l’histoire',
+    'history.see': 'À voir aujourd’hui',
     'contact.title': 'Nous contacter',
     'contact.intro': 'Une question sur votre séjour, une proposition de partenariat, une erreur repérée sur le site ? Écrivez-nous, nous répondons en français, en anglais ou en arabe.',
     'contact.name': 'Votre nom',
@@ -162,6 +170,11 @@ export const ui = {
     'footer.about': 'About us',
     'footer.about.text': 'Visit Soussa is run by residents who love their city and want to share it.',
     'footer.contact': 'Contact',
+    'history.title': 'History of Sousse',
+    'history.intro': 'From the Phoenician city of Hadrumetum to the UNESCO-listed medina: three thousand years of history along a few kilometres of coast.',
+    'history.teaser': 'Three thousand years of history, from the Phoenician city to today’s medina.',
+    'history.link': 'The full story',
+    'history.see': 'See it today',
     'contact.title': 'Contact us',
     'contact.intro': 'A question about your stay, a partnership idea, a mistake spotted on the site? Write to us; we answer in French, English or Arabic.',
     'contact.name': 'Your name',
@@ -243,6 +256,11 @@ export const ui = {
     'footer.about': 'من نحن؟',
     'footer.about.text': 'Visit Soussa مبادرة من سكان يحبّون مدينتهم ويريدون التعريف بها.',
     'footer.contact': 'اتصل بنا',
+    'history.title': 'تاريخ سوسة',
+    'history.intro': 'من مدينة هدرومتوم الفينيقية إلى المدينة العتيقة المصنّفة من اليونسكو: ثلاثة آلاف سنة من التاريخ على بضعة كيلومترات من الساحل.',
+    'history.teaser': 'ثلاثة آلاف سنة من التاريخ، من المدينة الفينيقية إلى المدينة العتيقة اليوم.',
+    'history.link': 'التاريخ كاملًا',
+    'history.see': 'لزيارته اليوم',
     'contact.title': 'اتصل بنا',
     'contact.intro': 'سؤال عن إقامتك، اقتراح شراكة، خطأ لاحظته في الموقع؟ راسلنا، نجيب بالعربية أو الفرنسية أو الإنجليزية.',
     'contact.name': 'الاسم',

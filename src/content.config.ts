@@ -65,4 +65,17 @@ const pratique = defineCollection({
   }),
 });
 
-export const collections = { lieux, experiences, evenements, pratique };
+// La frise « Histoire de Sousse » (/fr/decouvrir/histoire) : une entrée par période.
+const histoire = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/histoire' }),
+  schema: z.object({
+    title: z.string(),
+    period: z.string(), // libellé affiché, ex. "IXe siècle av. J.-C."
+    year: z.number(), // année de début, négative avant J.-C. ; sert à l'ordre de la frise
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
+    lieux: z.array(z.string()).default([]), // slugs des fiches lieux liées
+  }),
+});
+
+export const collections = { lieux, experiences, evenements, pratique, histoire };

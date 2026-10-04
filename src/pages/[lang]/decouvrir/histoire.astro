@@ -1,0 +1,14 @@
+---
+// /fr/decouvrir/histoire — la même page existe en /en/discover/history et /ar/discover/history
+// (voir ../discover/history.astro). Elle n'est générée que dans les langues où la frise a du contenu.
+import HistoryPage from '../../../components/HistoryPage.astro';
+import { sections, historyPath, type Lang } from '../../../i18n/ui';
+import { historyLangs } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  return (await historyLangs())
+    .filter((lang) => sections.decouvrir.path[lang] === 'decouvrir' && historyPath[lang] === 'histoire')
+    .map((lang) => ({ params: { lang } }));
+}
+---
+<HistoryPage lang={Astro.params.lang as Lang} />

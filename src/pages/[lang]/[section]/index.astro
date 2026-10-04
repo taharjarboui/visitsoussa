@@ -3,8 +3,8 @@ import Base from '../../../layouts/Base.astro';
 import Card from '../../../components/Card.astro';
 import Map from '../../../components/Map.astro';
 import { languages, sections, type Lang, type SectionKey } from '../../../i18n/ui';
-import { useTranslations, sectionUrl, splitId, formatDate } from '../../../i18n/utils';
-import { entriesFor, sectionAlternates } from '../../../lib/content';
+import { useTranslations, sectionUrl, splitId, formatDate, historyUrl } from '../../../i18n/utils';
+import { entriesFor, sectionAlternates, historyLangs } from '../../../lib/content';
 
 export function getStaticPaths() {
   const paths = [];
@@ -23,6 +23,7 @@ const collection = sections[key].collection;
 const entries = await entriesFor(collection, lang);
 const title = t(`section.${key}.title`);
 const intro = t(`section.${key}.intro`);
+const showHistory = key === 'decouvrir' && (await historyLangs()).includes(lang);
 
 const markers = key === 'decouvrir'
   ? entries.filter((e: any) => e.data.lat && e.data.lng).map((e: any) => ({ lat: e.data.lat, lng: e.data.lng, title: e.data.title, href: sectionUrl(lang, key, splitId(e.id).slug) }))
@@ -39,6 +40,18 @@ function meta(e: any): string | undefined {
     <h1 class="text-5xl md:text-6xl">{title}</h1>
     <p class="mt-4 max-w-2xl text-xl leading-relaxed text-mer-900/75">{intro}</p>
   </section>
+
+  {showHistory && (
+    <section class="container-x pb-12">
+      <a href={historyUrl(lang)} class="group flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-mer-900 px-6 py-6 text-chaux transition-colors hover:bg-mer-700 md:px-8">
+        <span>
+          <span class="block font-display text-3xl">{t('history.title')}</span>
+          <span class="mt-1 block text-chaux/80">{t('history.teaser')}</span>
+        </span>
+        <span class="font-semibold text-soleil-500">{t('history.link')} <span aria-hidden="true" class="inline-block rtl:-scale-x-100">→</span></span>
+      </a>
+    </section>
+  )}
 
   {markers.length > 0 && (
     <section class="container-x pb-12">

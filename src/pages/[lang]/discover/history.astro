@@ -1,0 +1,13 @@
+---
+// /en/discover/history et /ar/discover/history — voir ../decouvrir/histoire.astro.
+import HistoryPage from '../../../components/HistoryPage.astro';
+import { sections, historyPath, type Lang } from '../../../i18n/ui';
+import { historyLangs } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  return (await historyLangs())
+    .filter((lang) => sections.decouvrir.path[lang] === 'discover' && historyPath[lang] === 'history')
+    .map((lang) => ({ params: { lang } }));
+}
+---
+<HistoryPage lang={Astro.params.lang as Lang} />

@@ -1,6 +1,6 @@
 import { getCollection, type CollectionKey, type CollectionEntry } from 'astro:content';
 import { languages, type Lang, type SectionKey } from '../i18n/ui';
-import { splitId, sectionUrl, homeUrl, contactUrl } from '../i18n/utils';
+import { splitId, sectionUrl, homeUrl, contactUrl, historyUrl } from '../i18n/utils';
 
 /** Entrées d'une collection pour une langue, triées par `order` puis titre. */
 export async function entriesFor<C extends CollectionKey>(collection: C, lang: Lang) {
@@ -25,6 +25,24 @@ export function sectionAlternates(section: SectionKey) {
 export function homeAlternates() {
   const alternates: Partial<Record<Lang, string>> = {};
   for (const l of Object.keys(languages) as Lang[]) alternates[l] = homeUrl(l);
+  return alternates;
+}
+
+/** Périodes de la frise historique pour une langue, dans l'ordre chronologique. */
+export async function historyFor(lang: Lang) {
+  const all = await getCollection('histoire', (e) => splitId(e.id).lang === lang);
+  return all.sort((a, b) => a.data.year - b.data.year);
+}
+
+/** Langues où la frise a du contenu (la page n'existe que dans celles-ci). */
+export async function historyLangs() {
+  const all = await getCollection('histoire');
+  return [...new Set(all.map((e) => splitId(e.id).lang))];
+}
+
+export async function historyAlternates() {
+  const alternates: Partial<Record<Lang, string>> = {};
+  for (const l of await historyLangs()) alternates[l] = historyUrl(l);
   return alternates;
 }
 

@@ -32,6 +32,7 @@ Le squelette a été créé dans une session Claude (chat) puis déposé ici. Ce
 - Dépôt Git : https://github.com/taharjarboui/visitsoussa (branche `main`).
 - Hébergé sur Vercel (offre Hobby), domaine `www.visitsoussa.com` (principal ; `visitsoussa.com` redirige vers `www` côté Vercel ; DNS chez OVH). Chaque push sur `main` redéploie.
 - Formulaire de contact (`/<lang>/contact`) → `/api/contact` → e-mail via Resend. Aucune adresse e-mail affichée sur le site. Variables `RESEND_API_KEY`, `CONTACT_TO`, `CONTACT_FROM` dans Vercel.
+- Frise « Histoire de Sousse » : collection `histoire` (une entrée par période, triée par `year`), page `/fr/decouvrir/histoire` (`/en/discover/history`, `/ar/discover/history`), générée seulement dans les langues qui ont du contenu. Rattachée à Découvrir, pas au menu principal. FR seulement pour l'instant.
 - Pas encore : CMS, rubrique « Manger & boire », analytics.
 
 ## Décisions prises

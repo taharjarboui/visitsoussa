@@ -1,0 +1,66 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import type { Lang } from '../i18n/ui';
+import { useTranslations, sectionUrl } from '../i18n/utils';
+import { historyFor, historyAlternates } from '../lib/content';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const periods = await Promise.all(
+  (await historyFor(lang)).map(async (entry) => {
+    const { Content } = await render(entry);
+    // Lieux liés : on ne garde que ceux qui ont une fiche dans cette langue.
+    const lieux = (await Promise.all(entry.data.lieux.map((slug) => getEntry('lieux', `${lang}/${slug}`))))
+      .filter((l) => l !== undefined)
+      .map((l) => ({ title: l.data.title, href: sectionUrl(lang, 'decouvrir', l.id.split('/').slice(1).join('/')) }));
+    return { entry, Content, lieux };
+  }),
+);
+---
+<Base lang={lang} title={t('history.title')} description={t('history.intro')} alternates={await historyAlternates()}>
+  <section class="container-x pt-10 pb-12 md:pt-16">
+    <a href={sectionUrl(lang, 'decouvrir')} class="text-mer-700 font-medium hover:underline underline-offset-4">← {t('section.decouvrir.title')}</a>
+    <h1 class="mt-6 text-5xl md:text-6xl">{t('history.title')}</h1>
+    <p class="mt-4 max-w-2xl text-xl leading-relaxed text-mer-900/75">{t('history.intro')}</p>
+  </section>
+
+  <section class="container-x pb-20">
+    <!-- Frise verticale : sur mobile la ligne longe tout l'élément ; à partir de md, la date passe dans une colonne à gauche. -->
+    <ol>
+      {periods.map(({ entry, Content, lieux }) => (
+        <li class="group relative border-s-2 border-mer-700/30 ps-8 pb-14 last:pb-0 md:grid md:grid-cols-[11rem_1fr] md:border-s-0 md:ps-0 md:pb-0">
+          <p class="font-display text-xl text-soleil-600 md:pe-8 md:pt-1 md:text-end">{entry.data.period}</p>
+          <div class="md:relative md:border-s-2 md:border-mer-700/30 md:ps-10 md:pb-14 md:group-last:pb-0">
+            <span class="absolute -start-[9px] top-2 h-4 w-4 rounded-full border-[3px] border-chaux bg-soleil-500 ring-2 ring-mer-700" aria-hidden="true"></span>
+            <h2 class="mt-1 text-3xl md:mt-0 md:text-4xl">{entry.data.title}</h2>
+            {entry.data.image && (
+              <div class="arch-sm mt-5 aspect-[16/9] max-w-xl bg-sable-100">
+                <img src={entry.data.image} alt={entry.data.imageAlt ?? ''} loading="lazy" width="1200" height="675" class="h-full w-full object-cover" />
+              </div>
+            )}
+            <div class="prose-histoire mt-4 max-w-prose">
+              <Content />
+            </div>
+            {lieux.length > 0 && (
+              <p class="mt-4 text-mer-900/80">
+                <span class="font-semibold">{t('history.see')} :</span>{' '}
+                {lieux.map((l, i) => (
+                  <>{i > 0 && ' · '}<a href={l.href} class="text-mer-700 underline underline-offset-4 hover:text-mer-900">{l.title}</a></>
+                ))}
+              </p>
+            )}
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+</Base>
+
+<style is:global>
+  .prose-histoire { font-size: 1.0625rem; line-height: 1.75; }
+  .prose-histoire p { margin-bottom: 1rem; color: color-mix(in srgb, var(--color-mer-900) 88%, transparent); }
+  .prose-histoire p:last-child { margin-bottom: 0; }
+</style>
