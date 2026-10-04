@@ -55,12 +55,12 @@ const jsonLd = key === 'evenements'
       {d.category && <p class="mt-6 font-medium text-mer-700">{t(`cat.${d.category}` as any)}</p>}
       <h1 class="mt-1 max-w-3xl text-5xl leading-[1.05] md:text-6xl">{d.title}</h1>
       <p class="mt-5 max-w-2xl text-xl leading-relaxed text-mer-900/75">{d.summary}</p>
-      {d.unesco && <p class="mt-4 inline-flex items-center gap-2 rounded-full bg-sable-100 px-4 py-1.5 text-sm font-semibold text-mer-900">{t('fiche.unesco')}</p>}
+      {d.unesco && <p class="mt-4 inline-flex items-center gap-2 rounded-full bg-ciel-100 px-4 py-1.5 text-sm font-semibold text-mer-900">{t('fiche.unesco')}</p>}
     </header>
 
     {d.image && (
       <figure class="container-x mt-10">
-        <div class="arch aspect-[16/9] bg-sable-100 md:aspect-[21/9]">
+        <div class="arch aspect-[16/9] bg-ciel-100 md:aspect-[21/9]">
           <img src={d.image} alt={d.imageAlt ?? ''} width="1600" height="900" class="h-full w-full object-cover" />
         </div>
       </figure>
@@ -72,9 +72,9 @@ const jsonLd = key === 'evenements'
       </div>
       <aside class="space-y-8">
         {facts.length > 0 && (
-          <dl class="rounded-2xl border border-sable-300 bg-white/60 p-6">
+          <dl class="rounded-2xl border border-ciel-300 bg-white/60 p-6">
             {facts.map((f) => (
-              <div class="py-2 border-b border-sable-100 last:border-0">
+              <div class="py-2 border-b border-ciel-100 last:border-0">
                 <dt class="text-sm text-mer-700 font-medium">{f.label}</dt>
                 <dd class="mt-0.5 text-mer-900">{f.value}</dd>
               </div>

@@ -19,8 +19,14 @@
   --color-sable-300: #e8c58f;  /* sable du logo                        */
   --color-sable-100: #f3e6cf;
 
-  --color-chaux: #faf7f0;      /* fond général                         */
-  --color-chaux-2: #f1ebdf;    /* fond des sections alternées          */
+  --color-azur-900: #0d3b66;   /* bleu profond : fonds sombres (pied de page, frise) */
+  --color-azur-700: #1a5c99;   /* survol des fonds sombres             */
+
+  --color-ciel-300: #8fd0f0;   /* bleu ciel : bordures, accents        */
+  --color-ciel-100: #dcf0fc;   /* bleu ciel pâle : fonds d'attente     */
+
+  --color-chaux: #eef7fd;      /* fond général, blanc bleuté           */
+  --color-chaux-2: #d6edfa;    /* fond des sections alternées, ciel    */
 
   --font-display: "Fraunces", "Georgia", serif;
   --font-sans: "Figtree", system-ui, sans-serif;

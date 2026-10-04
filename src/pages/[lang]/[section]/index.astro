@@ -43,7 +43,7 @@ function meta(e: any): string | undefined {
 
   {showHistory && (
     <section class="container-x pb-12">
-      <a href={historyUrl(lang)} class="group flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-mer-900 px-6 py-6 text-chaux transition-colors hover:bg-mer-700 md:px-8">
+      <a href={historyUrl(lang)} class="group flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-azur-900 px-6 py-6 text-chaux transition-colors hover:bg-azur-700 md:px-8">
         <span>
           <span class="block font-display text-3xl">{t('history.title')}</span>
           <span class="mt-1 block text-chaux/80">{t('history.teaser')}</span>
@@ -66,7 +66,7 @@ function meta(e: any): string | undefined {
       <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {entries.map((e: any) => (
           <li>
-            <a href={sectionUrl(lang, key, splitId(e.id).slug)} class="block h-full rounded-2xl border border-sable-300 bg-white/60 p-6 transition-colors hover:border-mer-700">
+            <a href={sectionUrl(lang, key, splitId(e.id).slug)} class="block h-full rounded-2xl border border-ciel-300 bg-white/60 p-6 transition-colors hover:border-mer-700">
               <h2 class="text-2xl">{e.data.title}</h2>
               <p class="mt-2 text-mer-900/75">{e.data.summary}</p>
             </a>

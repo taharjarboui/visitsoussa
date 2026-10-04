@@ -14,7 +14,7 @@ const nav: { key: SectionKey; label: string }[] = [
 ];
 const current = Astro.url.pathname;
 ---
-<header class="sticky top-0 z-40 bg-chaux/90 backdrop-blur border-b border-sable-300/60">
+<header class="sticky top-0 z-40 bg-chaux/90 backdrop-blur border-b border-ciel-300/60">
   <div class="container-x flex items-center justify-between gap-6 py-3">
     <a href={homeUrl(lang)} class="flex items-center gap-3 shrink-0" aria-label={t('site.name')}>
       <img src="/images/logo.png" alt="" width="56" height="42" class="h-10 w-auto" />
@@ -48,10 +48,10 @@ const current = Astro.url.pathname;
       </button>
     </div>
   </div>
-  <div id="menu-mobile" class="md:hidden hidden border-t border-sable-300/60">
+  <div id="menu-mobile" class="md:hidden hidden border-t border-ciel-300/60">
     <nav class="container-x flex flex-col py-2">
       {nav.map(({ key, label }) => (
-        <a href={sectionUrl(lang, key)} class="py-3 font-medium border-b border-sable-100 last:border-0">{label}</a>
+        <a href={sectionUrl(lang, key)} class="py-3 font-medium border-b border-ciel-100 last:border-0">{label}</a>
       ))}
     </nav>
   </div>

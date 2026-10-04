@@ -37,7 +37,7 @@ const periods = await Promise.all(
             <span class="absolute -start-[9px] top-2 h-4 w-4 rounded-full border-[3px] border-chaux bg-soleil-500 ring-2 ring-mer-700" aria-hidden="true"></span>
             <h2 class="mt-1 text-3xl md:mt-0 md:text-4xl">{entry.data.title}</h2>
             {entry.data.image && (
-              <div class="arch-sm mt-5 aspect-[16/9] max-w-xl bg-sable-100">
+              <div class="arch-sm mt-5 aspect-[16/9] max-w-xl bg-ciel-100">
                 <img src={entry.data.image} alt={entry.data.imageAlt ?? ''} loading="lazy" width="1200" height="675" class="h-full w-full object-cover" />
               </div>
             )}

@@ -64,7 +64,7 @@ const ages = {
       </div>
     </div>
     <figure class="relative mx-auto w-full max-w-md md:max-w-none">
-      <div class="arch aspect-[4/5] bg-sable-100">
+      <div class="arch aspect-[4/5] bg-ciel-100">
         <img src="/images/kobba.jpg" alt="La coupole côtelée de la Kobba, dans la médina de Sousse" width="900" height="1125" class="h-full w-full object-cover" fetchpriority="high" />
       </div>
       <div class="absolute -bottom-4 -start-4 h-24 w-24 rounded-full bg-soleil-500 -z-10"></div>
@@ -79,7 +79,7 @@ const ages = {
         {tiles.map((tile) => (
           <li>
             <a href={tile.href} class="group block">
-              <div class="arch-sm aspect-square bg-sable-300">
+              <div class="arch-sm aspect-square bg-ciel-300">
                 <img src={tile.img} alt="" loading="lazy" width="400" height="400" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
               </div>
               <span class="mt-3 block text-center text-lg font-semibold text-mer-900 group-hover:text-mer-700">{tile.label}</span>
@@ -113,7 +113,7 @@ const ages = {
   </section>
 
   <!-- Sousse en trois temps -->
-  <section class="bg-mer-900 py-20 text-chaux">
+  <section class="bg-azur-900 py-20 text-chaux">
     <div class="container-x">
       <SectionHeading title={t('home.history')} light linkHref={hasHistory ? historyUrl(lang) : undefined} linkLabel={t('history.link')} />
       <ol class="mt-12 grid gap-10 md:grid-cols-3">
@@ -167,7 +167,7 @@ const ages = {
     <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {pratique.map((p) => (
         <li>
-          <a href={sectionUrl(lang, 'preparer', splitId(p.id).slug)} class="block h-full rounded-2xl border border-sable-300 bg-white/60 p-6 transition-colors hover:border-mer-700">
+          <a href={sectionUrl(lang, 'preparer', splitId(p.id).slug)} class="block h-full rounded-2xl border border-ciel-300 bg-white/60 p-6 transition-colors hover:border-mer-700">
             <h3 class="text-2xl">{p.data.title}</h3>
             <p class="mt-2 text-mer-900/75">{p.data.summary}</p>
           </a>
