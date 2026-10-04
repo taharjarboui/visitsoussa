@@ -12,7 +12,7 @@ Astro (statique, adaptateur `@astrojs/vercel` pour la seule route serveur `/api/
 Trois langues : `fr` (défaut), `en`, `ar` (RTL). Tout texte d'interface passe par `src/i18n/ui.ts`, jamais en dur dans les composants. Les URL sont préfixées par la langue (`/fr/…`) ; les segments de rubrique sont définis dans `sections` de `ui.ts`. Utiliser les propriétés logiques CSS (`ps-`, `ms-`, `start-`) pour que l'arabe fonctionne.
 
 ## Design
-Palette « Méditerranée sousienne » tirée du logo, des portes de la médina et de la mer : sarcelle `mer-700` (principal), soleil `soleil-500` (appels à l'action), fonds clairs bleu ciel (`chaux`, `chaux-2`, `ciel-*`), fonds sombres bleu profond (`azur-900`), pas de beige ni de vert en fond. Détail dans `docs/direction-visuelle.md`. Titres en Fraunces, corps en Figtree, arabe en Noto Naskh Arabic. Signature visuelle : l'arc outrepassé (`.arch`, `.arch-sm`) sur les photos. Pas de cartes à ombre grise, pas d'étiquettes en capitales, pas d'animations d'apparition.
+Palette « Méditerranée sousienne » tirée du logo, des portes de la médina et de la mer : sarcelle `mer-700` (principal), soleil `soleil-500` (appels à l'action), fonds clairs bleu ciel (`chaux`, `chaux-2`, `ciel-*`), fonds sombres bleu profond (`azur-900`), pas de beige ni de vert en fond. Détail dans `docs/direction-visuelle.md`. Titres en Fraunces, corps en Figtree, arabe en Noto Naskh Arabic. Photos en rectangle classique aux coins à peine arrondis (classes `.arch`, `.arch-sm`) ; l'arc outrepassé en forme de porte a été abandonné le 4 octobre 2026. Pas de cartes à ombre grise, pas d'étiquettes en capitales, pas d'animations d'apparition.
 
 ## Conventions
 - Une fiche = un fichier `src/content/<collection>/<lang>/<slug>.md` ; même slug dans chaque langue.

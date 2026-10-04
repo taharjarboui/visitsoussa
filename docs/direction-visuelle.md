@@ -18,7 +18,7 @@ Palette tirée du logo, des portes de la médina (Sidi Bouraoui) et de la mer. L
 
 Typographie : Fraunces (titres, serif chaleureuse), Figtree (corps), Noto Naskh Arabic (arabe, RTL).
 
-Signature : l'arc outrepassé en masque photo (`.arch`, `.arch-sm`). Pas de séparateur décoratif en pointillés sous les titres (retiré à la demande du porteur de projet). Photos plein cadre, lumière naturelle, jamais de stock.
+Photos : rectangle classique aux coins à peine arrondis (`.arch`, `.arch-sm`). L'arc outrepassé en forme de porte a été abandonné le 4 octobre 2026 à la demande du porteur de projet. Pas de séparateur décoratif en pointillés sous les titres (retiré à la demande du porteur de projet). Photos plein cadre, lumière naturelle, jamais de stock.
 
 À éviter : cartes à ombre grise uniformes, étiquettes en capitales, animations d'apparition sur chaque section, orientalisme de pacotille.
 

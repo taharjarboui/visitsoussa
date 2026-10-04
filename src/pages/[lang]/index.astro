@@ -62,22 +62,18 @@ const ages = {
 ---
 <Base lang={lang} title={t('site.name')} description={t('hero.text')} alternates={homeAlternates()}>
 
-  <!-- Hero : titre à gauche, photo en arc outrepassé à droite -->
-  <section class="container-x grid items-center gap-10 pt-10 pb-16 md:grid-cols-[1.1fr_1fr] md:pt-16 md:pb-24">
-    <div>
-      <h1 class="text-5xl leading-[1.02] md:text-7xl">{t('hero.title')}</h1>
-      <p class="mt-6 max-w-lg text-xl leading-relaxed text-mer-900/80">{t('hero.text')}</p>
+  <!-- Hero : la plage en fond, pleine largeur ; dégradé bleu profond en bas pour la lisibilité du texte -->
+  <section class="relative isolate flex min-h-[78vh] items-end overflow-hidden md:min-h-[85vh]">
+    <img src="/images/boujaafar.jpg" alt={t('hero.alt')} width="1024" height="700" class="absolute inset-0 -z-10 h-full w-full object-cover" fetchpriority="high" />
+    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-azur-900/85 via-azur-900/35 to-transparent" aria-hidden="true"></div>
+    <div class="container-x pb-14 pt-32 text-chaux md:pb-20">
+      <h1 class="max-w-3xl text-5xl leading-[1.02] md:text-7xl">{t('hero.title')}</h1>
+      <p class="mt-6 max-w-xl text-xl leading-relaxed text-chaux/90">{t('hero.text')}</p>
       <div class="mt-8 flex flex-wrap gap-3">
         <a href={sectionUrl(lang, 'decouvrir')} class="btn-primary">{t('hero.cta')}</a>
-        <a href={sectionUrl(lang, 'evenements')} class="btn-ghost">{t('hero.cta2')}</a>
+        <a href={sectionUrl(lang, 'evenements')} class="btn-light">{t('hero.cta2')}</a>
       </div>
     </div>
-    <figure class="relative mx-auto w-full max-w-md md:max-w-none">
-      <div class="arch aspect-[4/5] bg-ciel-100">
-        <img src="/images/kobba.jpg" alt="La coupole côtelée de la Kobba, dans la médina de Sousse" width="900" height="1125" class="h-full w-full object-cover" fetchpriority="high" />
-      </div>
-      <div class="absolute -bottom-4 -start-4 h-24 w-24 rounded-full bg-soleil-500 -z-10"></div>
-    </figure>
   </section>
 
   <!-- Que voulez-vous vivre ? -->

@@ -61,13 +61,14 @@
 }
 
 @layer components {
-  /* L'arc outrepassé : signature visuelle du site, utilisé pour les photos. */
+  /* Cadre des photos : rectangle classique aux coins à peine adoucis.
+     (Les noms .arch / .arch-sm viennent de l'ancien arc outrepassé, abandonné le 4 octobre 2026.) */
   .arch {
-    border-radius: 50% 50% 8px 8px / 42% 42% 8px 8px;
+    border-radius: 8px;
     overflow: hidden;
   }
   .arch-sm {
-    border-radius: 50% 50% 6px 6px / 30% 30% 6px 6px;
+    border-radius: 6px;
     overflow: hidden;
   }
 
