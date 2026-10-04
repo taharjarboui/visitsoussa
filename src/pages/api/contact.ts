@@ -48,7 +48,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     method: 'POST',
     headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      from: CONTACT_FROM,
+      // Une variable définie mais vide ne déclenche pas la valeur par défaut d'astro:env.
+      from: CONTACT_FROM || 'Visit Soussa <onboarding@resend.dev>',
       to: CONTACT_TO.split(',').map((a) => a.trim()),
       reply_to: email,
       subject: `[Visit Soussa] ${sujet || 'Contact'} · ${nom}`,
