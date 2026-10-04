@@ -43,7 +43,7 @@ Le squelette a été créé dans une session Claude (chat) puis déposé ici. Ce
 
 ## Prochaines étapes, dans l'ordre
 1. ~~`git init`, premier commit, dépôt GitHub~~ : fait le 4 octobre 2026 (`taharjarboui/visitsoussa`).
-2. ~~Déploiement~~ : fait le 4 octobre 2026 sur Vercel, domaine `visitsoussa.com`. La redirection `/` → `/fr/` est dans `vercel.json`.
+2. ~~Déploiement~~ : fait le 4 octobre 2026 sur Vercel, domaine `visitsoussa.com`. La redirection `/` → `/fr/` est dans `astro.config.mjs` (`redirects`).
 3. Vérifier et compléter les fiches FR (horaires, tarifs, dates), puis les traductions EN/AR.
 4. Photos haute résolution (2000 px min), WebP, dans `public/images/`.
 5. Rubrique « Manger & boire » (nouvelle collection `restaurants` ou extension de `experiences`).
