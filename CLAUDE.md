@@ -39,7 +39,7 @@ Le squelette a été créé dans une session Claude (chat) puis déposé ici. Ce
 - WordPress abandonné (v1 trop lente à construire). Hébergement : Vercel (compte existant), OVH gardé pour le domaine seulement. L'offre Hobby de Vercel interdit la publicité et l'affiliation : si le site en affiche un jour, passer à Vercel Pro ou migrer vers Cloudflare Pages.
 - Contenu en Markdown d'abord ; Sanity (CMS headless) plus tard, quand un contributeur non technique devra publier. Les gabarits passent par les collections Astro, donc la bascule ne touchera que `content.config.ts`.
 - Références : organisation inspirée de visitdubai.com/fr, composants inspirés du thème GoTravel, identité visuelle tirée de la médina (portes bleues de Sidi Bouraoui) et du logo.
-- Les associations (ESS, Tennis Club, Réseau Entreprendre…) vont dans le pied de page comme partenaires, pas dans le menu principal.
+- Les associations (Tennis Club, Réseau Entreprendre…) vont dans le pied de page comme partenaires, pas dans le menu principal. L'Étoile Sportive du Sahel a été retirée des partenaires le 4 octobre 2026 : le club n'apparaîtra que par des événements (victoires) ; le sport est traité comme « où faire du sport ».
 
 ## Prochaines étapes, dans l'ordre
 1. ~~`git init`, premier commit, dépôt GitHub~~ : fait le 4 octobre 2026 (`taharjarboui/visitsoussa`).
