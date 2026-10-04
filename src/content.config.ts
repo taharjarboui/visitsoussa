@@ -29,7 +29,7 @@ const experiences = defineCollection({
   schema: z.object({
     title: z.string(),
     summary: z.string(),
-    category: z.enum(['balade', 'plage', 'gastronomie', 'famille', 'shopping', 'culture']),
+    category: z.enum(['balade', 'plage', 'gastronomie', 'famille', 'shopping', 'culture', 'sport']),
     image: z.string().optional(),
     imageAlt: z.string().optional(),
     duration: z.string().optional(),
@@ -65,6 +65,21 @@ const pratique = defineCollection({
   }),
 });
 
+// Rubrique « Sousse Business » : informations pour les professionnels (hors menu principal).
+const business = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/business' }),
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    category: z.enum(['investir', 'congres', 'travailler', 'reseau']),
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
+    address: z.string().optional(),
+    website: z.string().url().optional(),
+    order: z.number().default(100),
+  }),
+});
+
 // La frise « Histoire de Sousse » (/fr/decouvrir/histoire) : une entrée par période.
 const histoire = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/histoire' }),
@@ -78,4 +93,4 @@ const histoire = defineCollection({
   }),
 });
 
-export const collections = { lieux, experiences, evenements, pratique, histoire };
+export const collections = { lieux, experiences, evenements, pratique, histoire, business };

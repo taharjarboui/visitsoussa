@@ -33,13 +33,15 @@ Le squelette a été créé dans une session Claude (chat) puis déposé ici. Ce
 - Hébergé sur Vercel (offre Hobby), domaine `www.visitsoussa.com` (principal ; `visitsoussa.com` redirige vers `www` côté Vercel ; DNS chez OVH). Chaque push sur `main` redéploie.
 - Formulaire de contact (`/<lang>/contact`) → `/api/contact` → e-mail via Resend. Aucune adresse e-mail affichée sur le site. Variables `RESEND_API_KEY`, `CONTACT_TO`, `CONTACT_FROM` dans Vercel.
 - Frise « Histoire de Sousse » : collection `histoire` (une entrée par période, triée par `year`), page `/fr/decouvrir/histoire` (`/en/discover/history`, `/ar/discover/history`), générée seulement dans les langues qui ont du contenu. Rattachée à Découvrir, pas au menu principal. FR seulement pour l'instant.
+- Sport : catégorie `sport` de la collection `experiences` (rubrique À faire), fiche d'ensemble `sport.md`, tuile « Sport » sur l'accueil. Les événements sportifs vont dans `evenements`.
+- Rubrique « Sousse Business » (`/fr/business`) : collection `business` (catégories investir, congres, travailler, reseau). Hors menu principal : lien discret dans l'en-tête (écrans larges), le menu mobile et le pied de page.
 - Pas encore : CMS, rubrique « Manger & boire », analytics.
 
 ## Décisions prises
 - WordPress abandonné (v1 trop lente à construire). Hébergement : Vercel (compte existant), OVH gardé pour le domaine seulement. L'offre Hobby de Vercel interdit la publicité et l'affiliation : si le site en affiche un jour, passer à Vercel Pro ou migrer vers Cloudflare Pages.
 - Contenu en Markdown d'abord ; Sanity (CMS headless) plus tard, quand un contributeur non technique devra publier. Les gabarits passent par les collections Astro, donc la bascule ne touchera que `content.config.ts`.
 - Références : organisation inspirée de visitdubai.com/fr, composants inspirés du thème GoTravel, identité visuelle tirée de la médina (portes bleues de Sidi Bouraoui) et du logo.
-- Les associations (Tennis Club, Réseau Entreprendre…) vont dans le pied de page comme partenaires, pas dans le menu principal. L'Étoile Sportive du Sahel a été retirée des partenaires le 4 octobre 2026 : le club n'apparaîtra que par des événements (victoires) ; le sport est traité comme « où faire du sport ».
+- Les associations (Réseau Entreprendre…) vont dans le pied de page comme partenaires, pas dans le menu principal. L'Étoile Sportive du Sahel a été retirée des partenaires le 4 octobre 2026 : le club n'apparaîtra que par des événements (victoires) ; le sport est traité comme « où faire du sport ». Le Tennis Club de Sousse n'est pas un partenaire (retiré le même jour).
 
 ## Prochaines étapes, dans l'ordre
 1. ~~`git init`, premier commit, dépôt GitHub~~ : fait le 4 octobre 2026 (`taharjarboui/visitsoussa`).

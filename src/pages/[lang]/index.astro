@@ -24,12 +24,21 @@ const markers = lieux
   .filter((l) => l.data.lat && l.data.lng)
   .map((l) => ({ lat: l.data.lat!, lng: l.data.lng!, title: l.data.title, href: sectionUrl(lang, 'decouvrir', splitId(l.id).slug) }));
 
+// Une tuile pointe vers sa fiche si elle existe dans la langue, sinon vers la page de la rubrique.
+const slugs = {
+  decouvrir: new Set(lieux.map((l) => splitId(l.id).slug)),
+  faire: new Set((await entriesFor('experiences', lang)).map((e) => splitId(e.id).slug)),
+};
+const fiche = (section: 'decouvrir' | 'faire', slug: string) =>
+  slugs[section].has(slug) ? sectionUrl(lang, section, slug) : sectionUrl(lang, section);
+
 const tiles = [
   { label: t('tile.patrimoine'), href: sectionUrl(lang, 'decouvrir'), img: '/images/kobba.jpg' },
-  { label: t('tile.plage'), href: sectionUrl(lang, 'decouvrir', 'plage-boujaafar'), img: '/images/boujaafar.jpg' },
-  { label: t('tile.gastronomie'), href: sectionUrl(lang, 'faire', 'street-food'), img: '/images/oliviers.jpg' },
+  { label: t('tile.plage'), href: fiche('decouvrir', 'plage-boujaafar'), img: '/images/boujaafar.jpg' },
+  { label: t('tile.gastronomie'), href: fiche('faire', 'street-food'), img: '/images/oliviers.jpg' },
   { label: t('tile.evenements'), href: sectionUrl(lang, 'evenements'), img: '/images/remparts.jpg' },
-  { label: t('tile.famille'), href: sectionUrl(lang, 'faire', 'avec-les-enfants'), img: '/images/boujaafar.jpg' },
+  { label: t('tile.famille'), href: fiche('faire', 'avec-les-enfants'), img: '/images/boujaafar.jpg' },
+  { label: t('tile.sport'), href: fiche('faire', 'sport'), img: '/images/boujaafar.jpg' },
 ];
 
 // Les trois âges de Sousse — une vraie séquence, donc une frise.
@@ -75,7 +84,7 @@ const ages = {
   <section class="bg-chaux-2 py-14">
     <div class="container-x">
       <h2 class="text-3xl md:text-4xl">{t('home.wish')}</h2>
-      <ul class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+      <ul class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
         {tiles.map((tile) => (
           <li>
             <a href={tile.href} class="group block">

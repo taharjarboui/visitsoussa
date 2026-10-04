@@ -34,6 +34,8 @@ const current = Astro.url.pathname;
     </nav>
 
     <div class="flex items-center gap-2">
+      <a href={sectionUrl(lang, 'business')}
+         class:list={['hidden lg:inline px-3 py-1.5 text-sm font-medium rounded-full', current.startsWith(sectionUrl(lang, 'business')) ? 'bg-mer-700 text-white' : 'text-mer-700 hover:bg-mer-100']}>{t('nav.business')}</a>
       <nav aria-label={t('nav.lang')} class="flex items-center rounded-full border border-mer-700/30 p-0.5 text-sm">
         {(Object.keys(languages) as Lang[]).map((l) => (
           <a href={alternates[l] ?? homeUrl(l)}
@@ -51,8 +53,9 @@ const current = Astro.url.pathname;
   <div id="menu-mobile" class="md:hidden hidden border-t border-ciel-300/60">
     <nav class="container-x flex flex-col py-2">
       {nav.map(({ key, label }) => (
-        <a href={sectionUrl(lang, key)} class="py-3 font-medium border-b border-ciel-100 last:border-0">{label}</a>
+        <a href={sectionUrl(lang, key)} class="py-3 font-medium border-b border-ciel-100">{label}</a>
       ))}
+      <a href={sectionUrl(lang, 'business')} class="py-3 font-medium text-mer-700">{t('nav.business')}</a>
     </nav>
   </div>
 </header>

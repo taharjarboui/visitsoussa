@@ -62,11 +62,12 @@ function meta(e: any): string | undefined {
   <section class="container-x pb-20">
     {entries.length === 0 ? (
       <p class="text-mer-900/60">{t('empty')}</p>
-    ) : key === 'preparer' ? (
+    ) : key === 'preparer' || key === 'business' ? (
       <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {entries.map((e: any) => (
           <li>
             <a href={sectionUrl(lang, key, splitId(e.id).slug)} class="block h-full rounded-2xl border border-ciel-300 bg-white/60 p-6 transition-colors hover:border-mer-700">
+              {meta(e) && <p class="text-sm font-medium text-mer-700">{meta(e)}</p>}
               <h2 class="text-2xl">{e.data.title}</h2>
               <p class="mt-2 text-mer-900/75">{e.data.summary}</p>
             </a>
