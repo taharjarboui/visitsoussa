@@ -1,0 +1,177 @@
+---
+import Base from '../../layouts/Base.astro';
+import Card from '../../components/Card.astro';
+import Map from '../../components/Map.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import { languages, type Lang } from '../../i18n/ui';
+import { useTranslations, sectionUrl, formatDate } from '../../i18n/utils';
+import { entriesFor, homeAlternates } from '../../lib/content';
+import { splitId } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return (Object.keys(languages) as Lang[]).map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Lang;
+const t = useTranslations(lang);
+
+const lieux = await entriesFor('lieux', lang);
+const featured = lieux.filter((l) => l.data.featured).slice(0, 6);
+const evenements = (await entriesFor('evenements', lang)).slice(0, 3);
+const pratique = await entriesFor('pratique', lang);
+
+const markers = lieux
+  .filter((l) => l.data.lat && l.data.lng)
+  .map((l) => ({ lat: l.data.lat!, lng: l.data.lng!, title: l.data.title, href: sectionUrl(lang, 'decouvrir', splitId(l.id).slug) }));
+
+const tiles = [
+  { label: t('tile.patrimoine'), href: sectionUrl(lang, 'decouvrir'), img: '/images/kobba.jpg' },
+  { label: t('tile.plage'), href: sectionUrl(lang, 'decouvrir', 'plage-boujaafar'), img: '/images/boujaafar.jpg' },
+  { label: t('tile.gastronomie'), href: sectionUrl(lang, 'faire', 'street-food'), img: '/images/oliviers.jpg' },
+  { label: t('tile.evenements'), href: sectionUrl(lang, 'evenements'), img: '/images/remparts.jpg' },
+  { label: t('tile.famille'), href: sectionUrl(lang, 'faire', 'avec-les-enfants'), img: '/images/boujaafar.jpg' },
+];
+
+// Les trois âges de Sousse — une vraie séquence, donc une frise.
+const ages = {
+  fr: [
+    { when: 'XIe s. av. J.-C. – IVe s.', name: 'Hadrumète', text: 'Comptoir phénicien, puis cité romaine prospère : les catacombes et les mosaïques du musée en témoignent.' },
+    { when: 'IXe siècle', name: 'La ville aghlabide', text: 'Le ribat (821), la Grande Mosquée (851) et les remparts dessinent la médina que l’on parcourt aujourd’hui.' },
+    { when: 'Aujourd’hui', name: 'Sousse', text: 'Troisième ville de Tunisie, médina classée par l’UNESCO en 1988, station balnéaire et ville étudiante.' },
+  ],
+  en: [
+    { when: '11th c. BC – 4th c.', name: 'Hadrumetum', text: 'A Phoenician trading post, then a thriving Roman city: the catacombs and the museum’s mosaics bear witness.' },
+    { when: '9th century', name: 'The Aghlabid city', text: 'The ribat (821), the Great Mosque (851) and the ramparts shape the medina you walk through today.' },
+    { when: 'Today', name: 'Sousse', text: 'Tunisia’s third city, a UNESCO-listed medina since 1988, a seaside resort and a university town.' },
+  ],
+  ar: [
+    { when: 'ق 11 ق.م – ق 4 م', name: 'هدرومتوم', text: 'مرفأ فينيقي ثم مدينة رومانية مزدهرة: تشهد على ذلك السراديب وفسيفساء المتحف.' },
+    { when: 'القرن التاسع', name: 'المدينة الأغلبية', text: 'الرباط (821) والجامع الكبير (851) والأسوار ترسم المدينة العتيقة التي نمشي فيها اليوم.' },
+    { when: 'اليوم', name: 'سوسة', text: 'ثالث مدن تونس، مدينة عتيقة مصنّفة من اليونسكو منذ 1988، منتجع ساحلي ومدينة جامعية.' },
+  ],
+}[lang];
+---
+<Base lang={lang} title={t('site.name')} description={t('hero.text')} alternates={homeAlternates()}>
+
+  <!-- Hero : titre à gauche, photo en arc outrepassé à droite -->
+  <section class="container-x grid items-center gap-10 pt-10 pb-16 md:grid-cols-[1.1fr_1fr] md:pt-16 md:pb-24">
+    <div>
+      <h1 class="text-5xl leading-[1.02] md:text-7xl">{t('hero.title')}</h1>
+      <p class="mt-6 max-w-lg text-xl leading-relaxed text-mer-900/80">{t('hero.text')}</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href={sectionUrl(lang, 'decouvrir')} class="btn-primary">{t('hero.cta')}</a>
+        <a href={sectionUrl(lang, 'evenements')} class="btn-ghost">{t('hero.cta2')}</a>
+      </div>
+    </div>
+    <figure class="relative mx-auto w-full max-w-md md:max-w-none">
+      <div class="arch aspect-[4/5] bg-sable-100">
+        <img src="/images/kobba.jpg" alt="La coupole côtelée de la Kobba, dans la médina de Sousse" width="900" height="1125" class="h-full w-full object-cover" fetchpriority="high" />
+      </div>
+      <div class="absolute -bottom-4 -start-4 h-24 w-24 rounded-full bg-soleil-500 -z-10"></div>
+    </figure>
+  </section>
+
+  <!-- Que voulez-vous vivre ? -->
+  <section class="bg-chaux-2 py-14">
+    <div class="container-x">
+      <h2 class="text-3xl md:text-4xl">{t('home.wish')}</h2>
+      <ul class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+        {tiles.map((tile) => (
+          <li>
+            <a href={tile.href} class="group block">
+              <div class="arch-sm aspect-square bg-sable-300">
+                <img src={tile.img} alt="" loading="lazy" width="400" height="400" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
+              </div>
+              <span class="mt-3 block text-center text-lg font-semibold text-mer-900 group-hover:text-mer-700">{tile.label}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- À voir absolument -->
+  <section class="container-x py-20">
+    <SectionHeading title={t('home.must')} text={t('home.must.text')} linkHref={sectionUrl(lang, 'decouvrir')} linkLabel={t('home.all.lieux')} />
+    {featured.length === 0 ? (
+      <p class="mt-8 text-mer-900/60">{t('empty')}</p>
+    ) : (
+      <div class="mt-10 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+        {featured.map((l) => (
+          <Card
+            href={sectionUrl(lang, 'decouvrir', splitId(l.id).slug)}
+            title={l.data.title}
+            summary={l.data.summary}
+            image={l.data.image}
+            imageAlt={l.data.imageAlt}
+            meta={t(`cat.${l.data.category}` as any)}
+            cta={t('card.read')}
+          />
+        ))}
+      </div>
+    )}
+  </section>
+
+  <!-- Sousse en trois temps -->
+  <section class="bg-mer-900 py-20 text-chaux">
+    <div class="container-x">
+      <SectionHeading title={t('home.history')} light />
+      <ol class="mt-12 grid gap-10 md:grid-cols-3">
+        {ages.map((age, i) => (
+          <li class="relative border-s-4 border-soleil-500 ps-6">
+            <span class="font-display text-5xl text-soleil-500">{i + 1}</span>
+            <p class="mt-2 text-sm text-chaux/70">{age.when}</p>
+            <h3 class="mt-1 text-3xl">{age.name}</h3>
+            <p class="mt-3 leading-relaxed text-chaux/85">{age.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Prochains rendez-vous -->
+  <section class="container-x py-20">
+    <SectionHeading title={t('home.events')} linkHref={sectionUrl(lang, 'evenements')} linkLabel={t('home.all.events')} />
+    {evenements.length === 0 ? (
+      <p class="mt-8 text-mer-900/60">{t('empty')}</p>
+    ) : (
+      <div class="mt-10 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+        {evenements.map((e) => (
+          <Card
+            href={sectionUrl(lang, 'evenements', splitId(e.id).slug)}
+            title={e.data.title}
+            summary={e.data.summary}
+            image={e.data.image}
+            imageAlt={e.data.imageAlt}
+            meta={e.data.dateStart ? formatDate(e.data.dateStart, lang) : e.data.period}
+            cta={t('card.read')}
+          />
+        ))}
+      </div>
+    )}
+  </section>
+
+  <!-- Carte -->
+  <section class="bg-chaux-2 py-20">
+    <div class="container-x">
+      <SectionHeading title={t('home.map')} text={t('home.map.text')} />
+      <div class="mt-8">
+        <Map markers={markers} class="h-[460px]" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Avant de partir -->
+  <section class="container-x py-20">
+    <SectionHeading title={t('home.prepare')} linkHref={sectionUrl(lang, 'preparer')} linkLabel={t('nav.preparer')} />
+    <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {pratique.map((p) => (
+        <li>
+          <a href={sectionUrl(lang, 'preparer', splitId(p.id).slug)} class="block h-full rounded-2xl border border-sable-300 bg-white/60 p-6 transition-colors hover:border-mer-700">
+            <h3 class="text-2xl">{p.data.title}</h3>
+            <p class="mt-2 text-mer-900/75">{p.data.summary}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>

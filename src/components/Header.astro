@@ -1,0 +1,66 @@
+---
+import { languages, type Lang, type SectionKey } from '../i18n/ui';
+import { useTranslations, sectionUrl, homeUrl } from '../i18n/utils';
+
+interface Props { lang: Lang; alternates?: Partial<Record<Lang, string>> }
+const { lang, alternates = {} } = Astro.props;
+const t = useTranslations(lang);
+
+const nav: { key: SectionKey; label: string }[] = [
+  { key: 'decouvrir', label: t('nav.decouvrir') },
+  { key: 'faire', label: t('nav.faire') },
+  { key: 'evenements', label: t('nav.evenements') },
+  { key: 'preparer', label: t('nav.preparer') },
+];
+const current = Astro.url.pathname;
+---
+<header class="sticky top-0 z-40 bg-chaux/90 backdrop-blur border-b border-sable-300/60">
+  <div class="container-x flex items-center justify-between gap-6 py-3">
+    <a href={homeUrl(lang)} class="flex items-center gap-3 shrink-0" aria-label={t('site.name')}>
+      <img src="/images/logo.png" alt="" width="56" height="42" class="h-10 w-auto" />
+      <span class="font-display text-xl font-semibold text-mer-700 hidden sm:inline">Visit <span class="text-sable-500">Soussa</span></span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-1" aria-label="Navigation principale">
+      {nav.map(({ key, label }) => {
+        const href = sectionUrl(lang, key);
+        const active = current.startsWith(href);
+        return (
+          <a href={href}
+             class:list={['px-4 py-2 rounded-full font-medium transition-colors', active ? 'bg-mer-700 text-white' : 'text-mer-900 hover:bg-mer-100']}
+             aria-current={active ? 'page' : undefined}>{label}</a>
+        );
+      })}
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <nav aria-label={t('nav.lang')} class="flex items-center rounded-full border border-mer-700/30 p-0.5 text-sm">
+        {(Object.keys(languages) as Lang[]).map((l) => (
+          <a href={alternates[l] ?? homeUrl(l)}
+             hreflang={l}
+             lang={l}
+             class:list={['px-2.5 py-1 rounded-full', l === lang ? 'bg-mer-700 text-white' : 'text-mer-700 hover:bg-mer-100']}
+             aria-current={l === lang ? 'true' : undefined}>{l.toUpperCase()}</a>
+        ))}
+      </nav>
+      <button id="menu-toggle" class="md:hidden p-2 rounded-full hover:bg-mer-100" aria-expanded="false" aria-controls="menu-mobile" aria-label={t('nav.menu')}>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="menu-mobile" class="md:hidden hidden border-t border-sable-300/60">
+    <nav class="container-x flex flex-col py-2">
+      {nav.map(({ key, label }) => (
+        <a href={sectionUrl(lang, key)} class="py-3 font-medium border-b border-sable-100 last:border-0">{label}</a>
+      ))}
+    </nav>
+  </div>
+</header>
+<script>
+  const btn = document.getElementById('menu-toggle');
+  const menu = document.getElementById('menu-mobile');
+  btn?.addEventListener('click', () => {
+    const open = menu?.classList.toggle('hidden') === false;
+    btn.setAttribute('aria-expanded', String(open));
+  });
+</script>

@@ -1,0 +1,80 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Card from '../../../components/Card.astro';
+import Map from '../../../components/Map.astro';
+import { languages, sections, type Lang, type SectionKey } from '../../../i18n/ui';
+import { useTranslations, sectionUrl, splitId, formatDate } from '../../../i18n/utils';
+import { entriesFor, sectionAlternates } from '../../../lib/content';
+
+export function getStaticPaths() {
+  const paths = [];
+  for (const lang of Object.keys(languages) as Lang[]) {
+    for (const key of Object.keys(sections) as SectionKey[]) {
+      paths.push({ params: { lang, section: sections[key].path[lang] }, props: { key } });
+    }
+  }
+  return paths;
+}
+
+const lang = Astro.params.lang as Lang;
+const { key } = Astro.props as { key: SectionKey };
+const t = useTranslations(lang);
+const collection = sections[key].collection;
+const entries = await entriesFor(collection, lang);
+const title = t(`section.${key}.title`);
+const intro = t(`section.${key}.intro`);
+
+const markers = key === 'decouvrir'
+  ? entries.filter((e: any) => e.data.lat && e.data.lng).map((e: any) => ({ lat: e.data.lat, lng: e.data.lng, title: e.data.title, href: sectionUrl(lang, key, splitId(e.id).slug) }))
+  : [];
+
+function meta(e: any): string | undefined {
+  if (key === 'evenements') return e.data.dateStart ? formatDate(e.data.dateStart, lang) : e.data.period;
+  if (e.data.category) return t(`cat.${e.data.category}` as any);
+  return undefined;
+}
+---
+<Base lang={lang} title={title} description={intro} alternates={sectionAlternates(key)}>
+  <section class="container-x pt-12 pb-10 md:pt-20">
+    <h1 class="text-5xl md:text-6xl">{title}</h1>
+    <p class="mt-4 max-w-2xl text-xl leading-relaxed text-mer-900/75">{intro}</p>
+    <div class="clous mt-8"></div>
+  </section>
+
+  {markers.length > 0 && (
+    <section class="container-x pb-12">
+      <Map markers={markers} class="h-[360px]" />
+    </section>
+  )}
+
+  <section class="container-x pb-20">
+    {entries.length === 0 ? (
+      <p class="text-mer-900/60">{t('empty')}</p>
+    ) : key === 'preparer' ? (
+      <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {entries.map((e: any) => (
+          <li>
+            <a href={sectionUrl(lang, key, splitId(e.id).slug)} class="block h-full rounded-2xl border border-sable-300 bg-white/60 p-6 transition-colors hover:border-mer-700">
+              <h2 class="text-2xl">{e.data.title}</h2>
+              <p class="mt-2 text-mer-900/75">{e.data.summary}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <div class="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+        {entries.map((e: any) => (
+          <Card
+            href={sectionUrl(lang, key, splitId(e.id).slug)}
+            title={e.data.title}
+            summary={e.data.summary}
+            image={e.data.image}
+            imageAlt={e.data.imageAlt}
+            meta={meta(e)}
+            cta={t('card.read')}
+          />
+        ))}
+      </div>
+    )}
+  </section>
+</Base>

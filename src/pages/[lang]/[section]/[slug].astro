@@ -1,0 +1,105 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import Map from '../../../components/Map.astro';
+import { languages, sections, type Lang, type SectionKey } from '../../../i18n/ui';
+import { useTranslations, sectionUrl, splitId, formatDate } from '../../../i18n/utils';
+import { ficheAlternates } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const key of Object.keys(sections) as SectionKey[]) {
+    const entries = await getCollection(sections[key].collection);
+    for (const entry of entries) {
+      const { lang, slug } = splitId(entry.id);
+      paths.push({ params: { lang, section: sections[key].path[lang], slug }, props: { key, entry } });
+    }
+  }
+  return paths;
+}
+
+const lang = Astro.params.lang as Lang;
+const { key, entry } = Astro.props as { key: SectionKey; entry: any };
+const t = useTranslations(lang);
+const { Content } = await render(entry);
+const d = entry.data;
+const slug = splitId(entry.id).slug;
+const alternates = await ficheAlternates(sections[key].collection, key, slug);
+const hasMap = typeof d.lat === 'number' && typeof d.lng === 'number';
+
+const facts: { label: string; value: string }[] = [];
+if (key === 'evenements') {
+  if (d.dateStart) facts.push({ label: t('event.when'), value: d.dateEnd ? `${formatDate(d.dateStart, lang)} – ${formatDate(d.dateEnd, lang)}` : formatDate(d.dateStart, lang) });
+  else if (d.period) facts.push({ label: t('event.when'), value: d.period });
+  if (d.place) facts.push({ label: t('event.where'), value: d.place });
+} else {
+  if (d.hours) facts.push({ label: t('fiche.hours'), value: d.hours });
+  if (d.price) facts.push({ label: t('fiche.price'), value: d.price });
+  if (d.duration) facts.push({ label: t('fiche.duration'), value: d.duration });
+  if (d.address) facts.push({ label: t('fiche.address'), value: d.address });
+}
+
+// Données structurées pour Google (résultats enrichis)
+const jsonLd = key === 'evenements'
+  ? { '@context': 'https://schema.org', '@type': 'Event', name: d.title, description: d.summary, startDate: d.dateStart, endDate: d.dateEnd, location: d.place ? { '@type': 'Place', name: d.place, address: 'Sousse, Tunisie' } : undefined, image: d.image ? new URL(d.image, Astro.site).toString() : undefined, url: Astro.url.toString() }
+  : key === 'decouvrir'
+  ? { '@context': 'https://schema.org', '@type': 'TouristAttraction', name: d.title, description: d.summary, image: d.image ? new URL(d.image, Astro.site).toString() : undefined, geo: hasMap ? { '@type': 'GeoCoordinates', latitude: d.lat, longitude: d.lng } : undefined, address: { '@type': 'PostalAddress', addressLocality: 'Sousse', addressCountry: 'TN' }, url: Astro.url.toString() }
+  : null;
+---
+<Base lang={lang} title={d.title} description={d.summary} image={d.image} alternates={alternates}>
+  {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+
+  <article>
+    <header class="container-x pt-10 md:pt-16">
+      <a href={sectionUrl(lang, key)} class="text-mer-700 font-medium hover:underline underline-offset-4">← {t(`section.${key}.title`)}</a>
+      {d.category && <p class="mt-6 font-medium text-mer-700">{t(`cat.${d.category}` as any)}</p>}
+      <h1 class="mt-1 max-w-3xl text-5xl leading-[1.05] md:text-6xl">{d.title}</h1>
+      <p class="mt-5 max-w-2xl text-xl leading-relaxed text-mer-900/75">{d.summary}</p>
+      {d.unesco && <p class="mt-4 inline-flex items-center gap-2 rounded-full bg-sable-100 px-4 py-1.5 text-sm font-semibold text-mer-900">{t('fiche.unesco')}</p>}
+    </header>
+
+    {d.image && (
+      <figure class="container-x mt-10">
+        <div class="arch aspect-[16/9] bg-sable-100 md:aspect-[21/9]">
+          <img src={d.image} alt={d.imageAlt ?? ''} width="1600" height="900" class="h-full w-full object-cover" />
+        </div>
+      </figure>
+    )}
+
+    <div class="container-x mt-12 grid gap-12 md:grid-cols-[1fr_300px]">
+      <div class="prose-sousse max-w-prose">
+        <Content />
+      </div>
+      <aside class="space-y-8">
+        {facts.length > 0 && (
+          <dl class="rounded-2xl border border-sable-300 bg-white/60 p-6">
+            {facts.map((f) => (
+              <div class="py-2 border-b border-sable-100 last:border-0">
+                <dt class="text-sm text-mer-700 font-medium">{f.label}</dt>
+                <dd class="mt-0.5 text-mer-900">{f.value}</dd>
+              </div>
+            ))}
+            {d.website && <a href={d.website} class="mt-4 inline-block font-semibold text-mer-700 hover:underline underline-offset-4" rel="noopener">{t('event.website')}</a>}
+          </dl>
+        )}
+        {hasMap && (
+          <div>
+            <h2 class="text-xl mb-3">{t('fiche.map')}</h2>
+            <Map markers={[{ lat: d.lat, lng: d.lng, title: d.title }]} center={[d.lat, d.lng]} zoom={16} class="h-[260px]" />
+          </div>
+        )}
+      </aside>
+    </div>
+  </article>
+</Base>
+
+<style is:global>
+  .prose-sousse { font-size: 1.125rem; line-height: 1.75; }
+  .prose-sousse h2 { font-size: 2rem; line-height: 1.15; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+  .prose-sousse h3 { font-size: 1.5rem; margin-top: 2rem; margin-bottom: 0.5rem; }
+  .prose-sousse p { margin-bottom: 1.25rem; color: color-mix(in srgb, var(--color-mer-900) 88%, transparent); }
+  .prose-sousse ul, .prose-sousse ol { margin: 0 0 1.25rem 1.25rem; }
+  .prose-sousse li { margin-bottom: 0.4rem; list-style: disc; }
+  .prose-sousse a { color: var(--color-mer-700); text-decoration: underline; text-underline-offset: 4px; }
+  .prose-sousse blockquote { border-inline-start: 4px solid var(--color-soleil-500); padding-inline-start: 1rem; font-family: var(--font-display); font-size: 1.35rem; }
+</style>
