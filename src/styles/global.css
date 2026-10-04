@@ -73,16 +73,6 @@
   .btn-light   { @apply inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold transition-colors border-2 border-white/70 text-white hover:bg-white hover:text-mer-900; }
 
   .container-x { @apply mx-auto w-full max-w-6xl px-5 md:px-8; }
-
-  /* Séparateur « clous de porte » */
-  .clous {
-    height: 10px;
-    background-image: radial-gradient(circle, var(--color-mer-700) 2px, transparent 2.5px);
-    background-size: 18px 10px;
-    background-repeat: repeat-x;
-    background-position: center;
-    width: 160px;
-  }
 }
 
 /* Carte Leaflet */

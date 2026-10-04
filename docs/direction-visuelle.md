@@ -15,7 +15,7 @@ Palette tirée du logo et des portes de la médina (Sidi Bouraoui) :
 
 Typographie : Fraunces (titres, serif chaleureuse), Figtree (corps), Noto Naskh Arabic (arabe, RTL).
 
-Signature : l'arc outrepassé en masque photo (`.arch`, `.arch-sm`), le séparateur « clous de porte » (`.clous`). Photos plein cadre, lumière naturelle, jamais de stock.
+Signature : l'arc outrepassé en masque photo (`.arch`, `.arch-sm`). Pas de séparateur décoratif en pointillés sous les titres (retiré à la demande du porteur de projet). Photos plein cadre, lumière naturelle, jamais de stock.
 
 À éviter : cartes à ombre grise uniformes, étiquettes en capitales, animations d'apparition sur chaque section, orientalisme de pacotille.
 
