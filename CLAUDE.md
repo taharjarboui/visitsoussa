@@ -29,7 +29,8 @@ Le squelette a été créé dans une session Claude (chat) puis déposé ici. Ce
 - Accueil, 4 rubriques, gabarit de fiche, 404, sélecteur de langue, hreflang, sitemap, JSON-LD.
 - 19 fiches FR (9 lieux, 4 expériences, 3 événements, 3 pratiques), 6 EN, 3 AR. Beaucoup de champs sont marqués « (à confirmer) » : horaires, tarifs, dates de festivals.
 - 4 photos basse résolution dans `public/images/` (kobba, boujaafar, oliviers, remparts) : des placeholders, à remplacer par des photos haute résolution.
-- Pas encore : dépôt Git, déploiement, CMS, rubrique « Manger & boire », formulaire de contact, analytics.
+- Dépôt Git : https://github.com/taharjarboui/visitsoussa (branche `main`).
+- Pas encore : déploiement, CMS, rubrique « Manger & boire », formulaire de contact, analytics.
 
 ## Décisions prises
 - WordPress abandonné (v1 trop lente à construire). Hébergement cible : Cloudflare Pages, OVH gardé pour le domaine seulement.
@@ -38,7 +39,7 @@ Le squelette a été créé dans une session Claude (chat) puis déposé ici. Ce
 - Les associations (ESS, Tennis Club, Réseau Entreprendre…) vont dans le pied de page comme partenaires, pas dans le menu principal.
 
 ## Prochaines étapes, dans l'ordre
-1. `git init`, premier commit, dépôt GitHub `visit-soussa`.
+1. ~~`git init`, premier commit, dépôt GitHub~~ : fait le 4 octobre 2026 (`taharjarboui/visitsoussa`).
 2. Connecter Cloudflare Pages (build `npm run build`, dossier `dist/`) pour une première URL.
 3. Vérifier et compléter les fiches FR (horaires, tarifs, dates), puis les traductions EN/AR.
 4. Photos haute résolution (2000 px min), WebP, dans `public/images/`.
