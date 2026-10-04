@@ -44,3 +44,7 @@ export function formatDate(date: Date, lang: Lang) {
   const locale = lang === 'ar' ? 'ar-TN' : lang === 'en' ? 'en-GB' : 'fr-FR';
   return new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long', year: 'numeric' }).format(date);
 }
+
+export function contactUrl(lang: Lang) {
+  return `/${lang}/contact`;
+}

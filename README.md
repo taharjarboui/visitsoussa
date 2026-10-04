@@ -32,4 +32,14 @@ npm run preview    # teste le build
 
 ## Déploiement
 
-Hébergé sur Vercel : chaque push sur `main` redéploie (commande `npm run build`, dossier `dist/`). La redirection `/` → `/fr/` est définie dans `vercel.json`. Domaine `visitsoussa.com`, DNS gérés chez OVH.
+Hébergé sur Vercel : chaque push sur `main` redéploie (commande `npm run build`). Domaine `www.visitsoussa.com`, DNS gérés chez OVH. La redirection `/` → `/fr/` est définie dans `astro.config.mjs` (`redirects`).
+
+Le site est statique, sauf `/api/contact` ([src/pages/api/contact.ts](src/pages/api/contact.ts)) : une fonction Vercel qui reçoit le formulaire de contact et l'envoie par e-mail via Resend. Elle lit trois variables d'environnement, à définir dans Vercel → Settings → Environment Variables (voir `.env.example`) :
+
+| Variable | Rôle |
+|---|---|
+| `RESEND_API_KEY` | Clé API Resend (secrète) |
+| `CONTACT_TO` | Adresse(s) qui reçoivent les messages |
+| `CONTACT_FROM` | Expéditeur ; par défaut `onboarding@resend.dev`, à remplacer par `contact@visitsoussa.com` une fois le domaine vérifié dans Resend |
+
+Pour tester le formulaire en local : copier `.env.example` en `.env` et le remplir.

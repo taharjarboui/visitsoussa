@@ -1,6 +1,6 @@
 import { getCollection, type CollectionKey, type CollectionEntry } from 'astro:content';
 import { languages, type Lang, type SectionKey } from '../i18n/ui';
-import { splitId, sectionUrl, homeUrl } from '../i18n/utils';
+import { splitId, sectionUrl, homeUrl, contactUrl } from '../i18n/utils';
 
 /** Entrées d'une collection pour une langue, triées par `order` puis titre. */
 export async function entriesFor<C extends CollectionKey>(collection: C, lang: Lang) {
@@ -31,3 +31,9 @@ export function homeAlternates() {
 export type Lieu = CollectionEntry<'lieux'>;
 export type Experience = CollectionEntry<'experiences'>;
 export type Evenement = CollectionEntry<'evenements'>;
+
+export function contactAlternates() {
+  const alternates: Partial<Record<Lang, string>> = {};
+  for (const l of Object.keys(languages) as Lang[]) alternates[l] = contactUrl(l);
+  return alternates;
+}

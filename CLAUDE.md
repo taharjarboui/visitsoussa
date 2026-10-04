@@ -6,7 +6,7 @@ Site vitrine pour promouvoir Sousse (Tunisie) auprès des touristes. Objectif : 
 Développeur full-stack **et** copywriter touristique. Les textes doivent être précis (dates, lieux vérifiés), chaleureux, sans superlatifs creux. En cas de doute sur un fait historique, le signaler avec « (à confirmer) » plutôt que d'inventer.
 
 ## Stack
-Astro (statique) + Tailwind CSS v4 (tokens dans `src/styles/global.css`, pas de `tailwind.config`) + Leaflet/OSM. Pas de framework UI (pas de React) sauf besoin réel. Contenu en Markdown dans `src/content/`, validé par `src/content.config.ts`.
+Astro (statique, adaptateur `@astrojs/vercel` pour la seule route serveur `/api/contact`) + Tailwind CSS v4 (tokens dans `src/styles/global.css`, pas de `tailwind.config`) + Leaflet/OSM. Pas de framework UI (pas de React) sauf besoin réel. Contenu en Markdown dans `src/content/`, validé par `src/content.config.ts`.
 
 ## Multilingue
 Trois langues : `fr` (défaut), `en`, `ar` (RTL). Tout texte d'interface passe par `src/i18n/ui.ts`, jamais en dur dans les composants. Les URL sont préfixées par la langue (`/fr/…`) ; les segments de rubrique sont définis dans `sections` de `ui.ts`. Utiliser les propriétés logiques CSS (`ps-`, `ms-`, `start-`) pour que l'arabe fonctionne.
@@ -21,7 +21,7 @@ Palette « Méditerranée sousienne » tirée du logo et des portes de la médin
 - Chaque fiche lieu/événement génère du JSON-LD Schema.org (voir `[slug].astro`).
 
 ## Prochaines étapes connues
-Photos haute résolution à fournir, rubrique Manger & boire, CMS Sanity (plus tard), formulaire de contact.
+Photos haute résolution à fournir, rubrique Manger & boire, CMS Sanity (plus tard).
 
 ## État du projet (4 octobre 2026)
 
@@ -31,7 +31,8 @@ Le squelette a été créé dans une session Claude (chat) puis déposé ici. Ce
 - 4 photos basse résolution dans `public/images/` (kobba, boujaafar, oliviers, remparts) : des placeholders, à remplacer par des photos haute résolution.
 - Dépôt Git : https://github.com/taharjarboui/visitsoussa (branche `main`).
 - Hébergé sur Vercel (offre Hobby), domaine `www.visitsoussa.com` (principal ; `visitsoussa.com` redirige vers `www` côté Vercel ; DNS chez OVH). Chaque push sur `main` redéploie.
-- Pas encore : CMS, rubrique « Manger & boire », formulaire de contact, analytics.
+- Formulaire de contact (`/<lang>/contact`) → `/api/contact` → e-mail via Resend. Aucune adresse e-mail affichée sur le site. Variables `RESEND_API_KEY`, `CONTACT_TO`, `CONTACT_FROM` dans Vercel.
+- Pas encore : CMS, rubrique « Manger & boire », analytics.
 
 ## Décisions prises
 - WordPress abandonné (v1 trop lente à construire). Hébergement : Vercel (compte existant), OVH gardé pour le domaine seulement. L'offre Hobby de Vercel interdit la publicité et l'affiliation : si le site en affiche un jour, passer à Vercel Pro ou migrer vers Cloudflare Pages.
@@ -45,7 +46,7 @@ Le squelette a été créé dans une session Claude (chat) puis déposé ici. Ce
 3. Vérifier et compléter les fiches FR (horaires, tarifs, dates), puis les traductions EN/AR.
 4. Photos haute résolution (2000 px min), WebP, dans `public/images/`.
 5. Rubrique « Manger & boire » (nouvelle collection `restaurants` ou extension de `experiences`).
-6. Formulaire de contact (Netlify Forms / Formspree), Plausible, puis Sanity.
+6. ~~Formulaire de contact~~ : fait le 4 octobre 2026 avec Resend (pas Formspree, choix de l'utilisateur). Restent Plausible, puis Sanity.
 
 ## Matériaux hors dépôt
 `../sources/` contient le site map, la mindmap, les docx d'origine, les logos et les photos originales. Ne pas les copier dans le dépôt.
