@@ -1,6 +1,6 @@
 ---
 title: "Hadrumète, comptoir phénicien"
-period: "IXe s. av. J.-C."
+period: "9e s. av. J.-C."
 year: -850
 lieux: [musee-archeologique]
 ---

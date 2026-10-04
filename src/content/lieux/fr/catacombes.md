@@ -1,6 +1,6 @@
 ---
 title: "Les Catacombes"
-summary: "Cinq kilomètres de galeries creusées entre le IIe et le IVe siècle, où reposent près de quinze mille premiers chrétiens d’Hadrumète."
+summary: "Cinq kilomètres de galeries creusées entre le 2e et le 4e siècle, où reposent près de quinze mille premiers chrétiens d’Hadrumète."
 category: patrimoine
 lat: 35.8216
 lng: 10.6279
@@ -13,7 +13,7 @@ order: 50
 
 ## Sous la ville
 
-Découvertes en 1888 par un officier français, les catacombes de Sousse forment l’un des plus grands ensembles de ce type hors d’Italie : près de 240 galeries, 5 kilomètres de couloirs, environ 15 000 sépultures. Elles furent creusées dans le tuf par la communauté chrétienne d’Hadrumète, entre le IIe et le IVe siècle.
+Découvertes en 1888 par un officier français, les catacombes de Sousse forment l’un des plus grands ensembles de ce type hors d’Italie : près de 240 galeries, 5 kilomètres de couloirs, environ 15 000 sépultures. Elles furent creusées dans le tuf par la communauté chrétienne d’Hadrumète, entre le 2e et le 4e siècle.
 
 ## La visite
 

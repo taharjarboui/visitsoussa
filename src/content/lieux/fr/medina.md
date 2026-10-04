@@ -1,6 +1,6 @@
 ---
 title: "La Médina"
-summary: "Enfermée dans ses remparts du IXe siècle, la vieille ville de Sousse descend en pente douce de la kasbah vers le port. On s’y perd, et c’est le but."
+summary: "Enfermée dans ses remparts du 9e siècle, la vieille ville de Sousse descend en pente douce de la kasbah vers le port. On s’y perd, et c’est le but."
 category: quartier
 lat: 35.8255
 lng: 10.6370

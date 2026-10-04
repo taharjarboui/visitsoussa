@@ -44,19 +44,19 @@ const tiles = [
 // Les trois âges de Sousse — une vraie séquence, donc une frise.
 const ages = {
   fr: [
-    { when: 'XIe s. av. J.-C. – IVe s.', name: 'Hadrumète', text: 'Comptoir phénicien, puis cité romaine prospère : les catacombes et les mosaïques du musée en témoignent.' },
-    { when: 'IXe siècle', name: 'La ville aghlabide', text: 'Le ribat (821), la Grande Mosquée (851) et les remparts dessinent la médina que l’on parcourt aujourd’hui.' },
-    { when: 'Aujourd’hui', name: 'Sousse', text: 'Troisième ville de Tunisie, médina classée par l’UNESCO en 1988, station balnéaire et ville étudiante.' },
+    { when: '11e s. av. J.-C. – 4e s.', img: '/images/oliviers.jpg', alt: 'Une oliveraie du Sahel sur sa terre rouge', name: 'Hadrumète', text: 'Comptoir phénicien, puis cité romaine prospère : les catacombes et les mosaïques du musée en témoignent.' },
+    { when: '9e siècle', img: '/images/remparts.jpg', alt: 'Les remparts crénelés de la médina de Sousse', name: 'La ville aghlabide', text: 'Le ribat (821), la Grande Mosquée (851) et les remparts dessinent la médina que l’on parcourt aujourd’hui.' },
+    { when: 'Aujourd’hui', img: '/images/boujaafar.jpg', alt: 'La plage de Boujaafar et la corniche', name: 'Sousse', text: 'Troisième ville de Tunisie, médina classée par l’UNESCO en 1988, station balnéaire et ville étudiante.' },
   ],
   en: [
-    { when: '11th c. BC – 4th c.', name: 'Hadrumetum', text: 'A Phoenician trading post, then a thriving Roman city: the catacombs and the museum’s mosaics bear witness.' },
-    { when: '9th century', name: 'The Aghlabid city', text: 'The ribat (821), the Great Mosque (851) and the ramparts shape the medina you walk through today.' },
-    { when: 'Today', name: 'Sousse', text: 'Tunisia’s third city, a UNESCO-listed medina since 1988, a seaside resort and a university town.' },
+    { when: '11th c. BC – 4th c.', img: '/images/oliviers.jpg', alt: 'An olive grove on the red earth of the Sahel', name: 'Hadrumetum', text: 'A Phoenician trading post, then a thriving Roman city: the catacombs and the museum’s mosaics bear witness.' },
+    { when: '9th century', img: '/images/remparts.jpg', alt: 'The crenellated ramparts of the Sousse medina', name: 'The Aghlabid city', text: 'The ribat (821), the Great Mosque (851) and the ramparts shape the medina you walk through today.' },
+    { when: 'Today', img: '/images/boujaafar.jpg', alt: 'Boujaafar beach and the seafront', name: 'Sousse', text: 'Tunisia’s third city, a UNESCO-listed medina since 1988, a seaside resort and a university town.' },
   ],
   ar: [
-    { when: 'ق 11 ق.م – ق 4 م', name: 'هدرومتوم', text: 'مرفأ فينيقي ثم مدينة رومانية مزدهرة: تشهد على ذلك السراديب وفسيفساء المتحف.' },
-    { when: 'القرن التاسع', name: 'المدينة الأغلبية', text: 'الرباط (821) والجامع الكبير (851) والأسوار ترسم المدينة العتيقة التي نمشي فيها اليوم.' },
-    { when: 'اليوم', name: 'سوسة', text: 'ثالث مدن تونس، مدينة عتيقة مصنّفة من اليونسكو منذ 1988، منتجع ساحلي ومدينة جامعية.' },
+    { when: 'ق 11 ق.م – ق 4 م', img: '/images/oliviers.jpg', alt: 'غابة زيتون على تربة الساحل الحمراء', name: 'هدرومتوم', text: 'مرفأ فينيقي ثم مدينة رومانية مزدهرة: تشهد على ذلك السراديب وفسيفساء المتحف.' },
+    { when: 'القرن التاسع', img: '/images/remparts.jpg', alt: 'أسوار المدينة العتيقة بسوسة', name: 'المدينة الأغلبية', text: 'الرباط (821) والجامع الكبير (851) والأسوار ترسم المدينة العتيقة التي نمشي فيها اليوم.' },
+    { when: 'اليوم', img: '/images/boujaafar.jpg', alt: 'شاطئ بوجعفر والكورنيش', name: 'سوسة', text: 'ثالث مدن تونس، مدينة عتيقة مصنّفة من اليونسكو منذ 1988، منتجع ساحلي ومدينة جامعية.' },
   ],
 }[lang];
 ---
@@ -117,16 +117,28 @@ const ages = {
     )}
   </section>
 
-  <!-- Sousse en trois temps -->
+  <!-- Sousse en trois temps : une frise avec une photo au-dessus de chaque époque.
+       À partir de md, la ligne de temps est horizontale ; sur mobile, elle devient verticale (comme la page Histoire). -->
   <section class="bg-azur-900 py-20 text-chaux">
     <div class="container-x">
       <SectionHeading title={t('home.history')} light linkHref={hasHistory ? historyUrl(lang) : undefined} linkLabel={t('history.link')} />
-      <ol class="mt-12 grid gap-10 md:grid-cols-3">
+      <ol class="mt-12 grid gap-12 md:grid-cols-3 md:gap-8">
         {ages.map((age, i) => (
-          <li class="relative border-s-4 border-soleil-500 ps-6">
-            <span class="font-display text-5xl text-soleil-500">{i + 1}</span>
-            <p class="mt-2 text-sm text-chaux/70">{age.when}</p>
-            <h3 class="mt-1 text-3xl">{age.name}</h3>
+          <li class="relative border-s-2 border-chaux/25 ps-8 md:border-s-0 md:ps-0">
+            <div class="arch aspect-[4/3] bg-azur-700">
+              <img src={age.img} alt={age.alt} loading="lazy" width="800" height="600" class="h-full w-full object-cover" />
+            </div>
+            <!-- Rail horizontal (md+) : le trait déborde de moitié dans l'espace entre colonnes pour former une ligne continue -->
+            <div class="relative my-7 hidden h-4 md:block" aria-hidden="true">
+              <span class:list={['absolute top-1/2 h-0.5 -translate-y-1/2 bg-chaux/30', i === 0 ? 'start-0' : '-start-4', i === ages.length - 1 ? 'end-0' : '-end-4']}></span>
+              <span class="absolute start-0 top-0 h-4 w-4 rounded-full border-[3px] border-azur-900 bg-soleil-500 ring-2 ring-soleil-500/40"></span>
+              {i === ages.length - 1 && <span class="absolute end-0 top-1/2 h-0 w-0 -translate-y-1/2 border-y-[6px] border-s-[9px] border-y-transparent border-s-chaux/50 rtl:-scale-x-100"></span>}
+            </div>
+            <p class="relative mt-5 font-display text-xl text-soleil-500 md:mt-0">
+              <span class="absolute -start-[calc(2rem+9px)] top-1.5 h-4 w-4 rounded-full border-[3px] border-azur-900 bg-soleil-500 md:hidden" aria-hidden="true"></span>
+              {age.when}
+            </p>
+            <h3 class="mt-1 text-3xl md:text-4xl">{age.name}</h3>
             <p class="mt-3 leading-relaxed text-chaux/85">{age.text}</p>
           </li>
         ))}

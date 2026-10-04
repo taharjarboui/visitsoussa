@@ -20,6 +20,6 @@ Typographie : Fraunces (titres, serif chaleureuse), Figtree (corps), Noto Naskh 
 
 Photos : rectangle classique aux coins à peine arrondis (`.arch`, `.arch-sm`). L'arc outrepassé en forme de porte a été abandonné le 4 octobre 2026 à la demande du porteur de projet. Pas de séparateur décoratif en pointillés sous les titres (retiré à la demande du porteur de projet). Photos plein cadre, lumière naturelle, jamais de stock.
 
-À éviter : cartes à ombre grise uniformes, étiquettes en capitales, animations d'apparition sur chaque section, orientalisme de pacotille.
+À éviter : cartes à ombre grise uniformes, étiquettes en capitales, animations d'apparition sur les textes et les sections (seules les photos montent en apparaissant au défilement, depuis le 4 octobre 2026), orientalisme de pacotille.
 
 Références : visitdubai.com/fr (hiérarchie du menu, itinéraires suggérés), thème GoTravel (hero plein écran, cartes photo, mosaïque de quartiers).

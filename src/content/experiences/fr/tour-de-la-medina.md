@@ -15,7 +15,7 @@ La médina compte une dizaine de zaouïas, ces mausolées de saints locaux recon
 
 ## Les architectures de Sousse
 
-En trois rues, on traverse mille ans : la pierre nue des Aghlabides au ribat et à la Grande Mosquée, la coupole zigzagante de la Kobba, les portes cloutées et les moucharabiehs des maisons bourgeoises, les façades Art déco du début du XXe siècle à la sortie de Bab el Bhar.
+En trois rues, on traverse mille ans : la pierre nue des Aghlabides au ribat et à la Grande Mosquée, la coupole zigzagante de la Kobba, les portes cloutées et les moucharabiehs des maisons bourgeoises, les façades Art déco du début du 20e siècle à la sortie de Bab el Bhar.
 
 ## Shopping et souvenirs
 

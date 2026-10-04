@@ -82,6 +82,20 @@
   .container-x { @apply mx-auto w-full max-w-6xl px-5 md:px-8; }
 }
 
+/* Apparition des photos au défilement (script dans Base.astro).
+   La classe .js-reveal n'est posée que si JavaScript tourne et que le visiteur
+   n'a pas demandé de réduire les animations ; sans elle, tout reste visible. */
+.js-reveal .reveal {
+  opacity: 0;
+  transform: translateY(90px);
+  transition: opacity 1.2s ease, transform 1.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.js-reveal .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
 /* Carte Leaflet */
 .leaflet-container { font-family: inherit; }
 .marker-pin {

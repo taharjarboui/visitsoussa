@@ -16,7 +16,7 @@ order: 30
 
 ## L’histoire du musée El Kobba
 
-Situé au cœur de la médina de Sousse, le musée El Kobba est une perle historique de l’architecture arabo-musulmane. Sa coupole en zigzag, datée du XIe siècle, est unique en Tunisie. Le bâtiment a servi d’auberge (fondouk) pour les commerçants et voyageurs de passage, puis de café, avant d’être transformé en musée retraçant l’histoire commerciale et artisanale de Sousse. Il offre aux visiteurs un voyage fascinant à travers les siècles.
+Situé au cœur de la médina de Sousse, le musée El Kobba est une perle historique de l’architecture arabo-musulmane. Sa coupole en zigzag, datée du 11e siècle, est unique en Tunisie. Le bâtiment a servi d’auberge (fondouk) pour les commerçants et voyageurs de passage, puis de café, avant d’être transformé en musée retraçant l’histoire commerciale et artisanale de Sousse. Il offre aux visiteurs un voyage fascinant à travers les siècles.
 
 ## Les collections et expositions
 

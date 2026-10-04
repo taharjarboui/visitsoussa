@@ -19,7 +19,7 @@ Construite en 851 par l’émir Abou al-Abbas Mohammed, la Grande Mosquée de So
 
 ## La cour
 
-On entre par une cour entourée de portiques aux arcs outrepassés. L’inscription coufique qui court sous les créneaux est l’une des plus anciennes de ce type en Tunisie. La salle de prière, à treize nefs, a été agrandie au Xe et au XVIIe siècle.
+On entre par une cour entourée de portiques aux arcs outrepassés. L’inscription coufique qui court sous les créneaux est l’une des plus anciennes de ce type en Tunisie. La salle de prière, à treize nefs, a été agrandie au 10e et au 17e siècle.
 
 ## Pour la visite
 

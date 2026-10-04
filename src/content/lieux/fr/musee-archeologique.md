@@ -14,7 +14,7 @@ order: 40
 
 ## Hadrumète en mosaïques
 
-Installé dans la kasbah, à l’angle sud-ouest des remparts, le musée rassemble ce que les fouilles de Sousse et de sa région ont livré de plus beau : des mosaïques des IIe–IVe siècles, découvertes pour la plupart dans les villas de l’ancienne Hadrumète. Le musée a rouvert en 2012 après une rénovation complète.
+Installé dans la kasbah, à l’angle sud-ouest des remparts, le musée rassemble ce que les fouilles de Sousse et de sa région ont livré de plus beau : des mosaïques des 2e–4e siècles, découvertes pour la plupart dans les villas de l’ancienne Hadrumète. Le musée a rouvert en 2012 après une rénovation complète.
 
 ## Les pièces maîtresses
 
