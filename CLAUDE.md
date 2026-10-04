@@ -21,7 +21,7 @@ Palette « Méditerranée sousienne » tirée du logo et des portes de la médin
 - Chaque fiche lieu/événement génère du JSON-LD Schema.org (voir `[slug].astro`).
 
 ## Prochaines étapes connues
-Photos haute résolution à fournir, rubrique Manger & boire, CMS Sanity (plus tard), déploiement Cloudflare Pages, formulaire de contact.
+Photos haute résolution à fournir, rubrique Manger & boire, CMS Sanity (plus tard), formulaire de contact.
 
 ## État du projet (4 octobre 2026)
 
@@ -30,17 +30,18 @@ Le squelette a été créé dans une session Claude (chat) puis déposé ici. Ce
 - 19 fiches FR (9 lieux, 4 expériences, 3 événements, 3 pratiques), 6 EN, 3 AR. Beaucoup de champs sont marqués « (à confirmer) » : horaires, tarifs, dates de festivals.
 - 4 photos basse résolution dans `public/images/` (kobba, boujaafar, oliviers, remparts) : des placeholders, à remplacer par des photos haute résolution.
 - Dépôt Git : https://github.com/taharjarboui/visitsoussa (branche `main`).
-- Pas encore : déploiement, CMS, rubrique « Manger & boire », formulaire de contact, analytics.
+- Hébergé sur Vercel (offre Hobby), domaine `visitsoussa.com` (DNS chez OVH). Chaque push sur `main` redéploie.
+- Pas encore : CMS, rubrique « Manger & boire », formulaire de contact, analytics.
 
 ## Décisions prises
-- WordPress abandonné (v1 trop lente à construire). Hébergement cible : Cloudflare Pages, OVH gardé pour le domaine seulement.
+- WordPress abandonné (v1 trop lente à construire). Hébergement : Vercel (compte existant), OVH gardé pour le domaine seulement. L'offre Hobby de Vercel interdit la publicité et l'affiliation : si le site en affiche un jour, passer à Vercel Pro ou migrer vers Cloudflare Pages.
 - Contenu en Markdown d'abord ; Sanity (CMS headless) plus tard, quand un contributeur non technique devra publier. Les gabarits passent par les collections Astro, donc la bascule ne touchera que `content.config.ts`.
 - Références : organisation inspirée de visitdubai.com/fr, composants inspirés du thème GoTravel, identité visuelle tirée de la médina (portes bleues de Sidi Bouraoui) et du logo.
 - Les associations (ESS, Tennis Club, Réseau Entreprendre…) vont dans le pied de page comme partenaires, pas dans le menu principal.
 
 ## Prochaines étapes, dans l'ordre
 1. ~~`git init`, premier commit, dépôt GitHub~~ : fait le 4 octobre 2026 (`taharjarboui/visitsoussa`).
-2. Connecter Cloudflare Pages (build `npm run build`, dossier `dist/`) pour une première URL.
+2. ~~Déploiement~~ : fait le 4 octobre 2026 sur Vercel, domaine `visitsoussa.com`. La redirection `/` → `/fr/` est dans `vercel.json`.
 3. Vérifier et compléter les fiches FR (horaires, tarifs, dates), puis les traductions EN/AR.
 4. Photos haute résolution (2000 px min), WebP, dans `public/images/`.
 5. Rubrique « Manger & boire » (nouvelle collection `restaurants` ou extension de `experiences`).

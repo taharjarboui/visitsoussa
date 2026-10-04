@@ -4,8 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  // À remplacer par le domaine définitif (ex. https://visitsoussa.tn)
-  site: 'https://visitsoussa.pages.dev',
+  site: 'https://visitsoussa.com',
   integrations: [sitemap()],
   i18n: {
     defaultLocale: 'fr',

@@ -32,5 +32,4 @@ npm run preview    # teste le build
 
 ## Déploiement
 
-Site statique : Cloudflare Pages ou Netlify, commande `npm run build`, dossier `dist/`.
-Changer `site` dans `astro.config.mjs` quand le domaine est connu.
+Hébergé sur Vercel : chaque push sur `main` redéploie (commande `npm run build`, dossier `dist/`). La redirection `/` → `/fr/` est définie dans `vercel.json`. Domaine `visitsoussa.com`, DNS gérés chez OVH.
