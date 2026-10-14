@@ -1,0 +1,14 @@
+---
+// Page « Sousse au fil du temps » (/fr/decouvrir/sousse-au-fil-du-temps, /en|ar/discover/sousse-through-time).
+// Générée seulement dans les langues où la collection memoire a du contenu.
+import MemoirePage from '../../../components/MemoirePage.astro';
+import { sections, memoirePath, type Lang } from '../../../i18n/ui';
+import { memoireLangs } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  return (await memoireLangs())
+    .filter((lang) => sections.decouvrir.path[lang] === 'decouvrir' && memoirePath[lang] === 'sousse-au-fil-du-temps')
+    .map((lang) => ({ params: { lang } }));
+}
+---
+<MemoirePage lang={Astro.params.lang as Lang} />

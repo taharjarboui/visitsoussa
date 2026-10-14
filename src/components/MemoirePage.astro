@@ -1,0 +1,164 @@
+---
+import { getEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Map from './Map.astro';
+import type { Lang } from '../i18n/ui';
+import { useTranslations, sectionUrl, splitId } from '../i18n/utils';
+import { memoireFor, memoireAlternates } from '../lib/content';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const places = await Promise.all(
+  (await memoireFor(lang)).map(async (entry, i) => {
+    const slug = splitId(entry.id).slug;
+    const fiche = entry.data.lieu ? await getEntry('lieux', `${lang}/${entry.data.lieu}`) : undefined;
+    // Tant qu'aucune photo récente n'existe, la série se termine par un emplacement « Aujourd'hui ».
+    const hasToday = entry.data.photos.some((p) => p.year >= 2000);
+    return { slug, n: i + 1, data: entry.data, hasToday, ficheHref: fiche ? sectionUrl(lang, 'decouvrir', entry.data.lieu!) : undefined };
+  }),
+);
+const markers = places.map((p) => ({ lat: p.data.lat, lng: p.data.lng, title: p.data.title, id: p.slug, label: String(p.n) }));
+---
+<Base lang={lang} title={t('memoire.title')} description={t('memoire.intro')} alternates={await memoireAlternates()}>
+  <section class="container-x pt-10 pb-10 md:pt-16">
+    <a href={sectionUrl(lang, 'decouvrir')} class="text-mer-700 font-medium hover:underline underline-offset-4">← {t('section.decouvrir.title')}</a>
+    <h1 class="mt-6 text-5xl md:text-6xl">{t('memoire.title')}</h1>
+    <p class="mt-4 max-w-2xl text-xl leading-relaxed text-mer-900/75">{t('memoire.intro')}</p>
+  </section>
+
+  <!-- Sans JavaScript, tous les lieux et toutes les photos s'affichent l'un sous l'autre.
+       Avec JavaScript (classe .memoire-js), un seul lieu et une seule photo à la fois. -->
+  <section class="container-x grid items-start gap-10 pb-20 lg:grid-cols-[1fr_1.15fr]" data-memoire>
+    <div class="lg:sticky lg:top-24">
+      <Map markers={markers} class="h-[300px] md:h-[420px] lg:h-[520px]" />
+      <ol class="mt-4 flex flex-wrap gap-2" aria-label={t('memoire.map')}>
+        {places.map((p) => (
+          <li>
+            <a href={`#lieu-${p.slug}`} data-choose={p.slug}
+               class="inline-flex items-center gap-2 rounded-full border-2 border-mer-700/30 px-4 py-1.5 font-medium text-mer-900 hover:border-mer-700 aria-[current=true]:border-mer-700 aria-[current=true]:bg-mer-700 aria-[current=true]:text-white">
+              <span class="font-display">{p.n}</span> {p.data.title}
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <div>
+      {places.map((p) => {
+        const slots = p.data.photos.length + (p.hasToday ? 0 : 1);
+        return (
+          <article id={`lieu-${p.slug}`} data-place={p.slug} class="scroll-mt-24 pb-14 last:pb-0" aria-labelledby={`titre-${p.slug}`}>
+            <h2 id={`titre-${p.slug}`} class="text-3xl md:text-4xl"><span class="font-display text-soleil-600">{p.n}.</span> {p.data.title}</h2>
+            <p class="mt-3 max-w-prose text-lg leading-relaxed text-mer-900/80">{p.data.summary}</p>
+
+            <div class="mt-6" data-series>
+              {p.data.photos.map((ph, j) => (
+                <figure data-slot={j} class="mb-8">
+                  <div class="aspect-[4/3] overflow-hidden rounded-lg bg-azur-900">
+                    <img src={ph.src} alt={ph.legende} loading="lazy" class="h-full w-full object-contain" />
+                  </div>
+                  <figcaption class="mt-3">
+                    <p class="font-display text-xl text-soleil-600">{ph.date}</p>
+                    <p class="mt-1 leading-relaxed text-mer-900/85">{ph.legende}</p>
+                    <p class="mt-1 text-sm text-mer-900/60">{t('memoire.source')} : {ph.credit} · {ph.licence}</p>
+                  </figcaption>
+                </figure>
+              ))}
+              {!p.hasToday && (
+                <figure data-slot={p.data.photos.length} class="mb-8">
+                  <div class="grid aspect-[4/3] place-items-center rounded-lg border-2 border-dashed border-ciel-300 bg-ciel-100 p-6 text-center">
+                    <p class="font-display text-2xl text-mer-700">{t('memoire.today')}</p>
+                  </div>
+                </figure>
+              )}
+            </div>
+
+            <!-- Réglette chronologique : visible seulement avec JavaScript -->
+            <div class="hidden items-center gap-3" data-controls>
+              <button type="button" data-prev class="grid h-11 w-11 shrink-0 place-items-center rounded-full border-2 border-mer-700 text-mer-700 hover:bg-mer-700 hover:text-white disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-mer-700" aria-label={t('memoire.prev')}>
+                <span aria-hidden="true" class="inline-block rtl:-scale-x-100">←</span>
+              </button>
+              <div class="relative flex flex-1 items-center justify-between" role="group" aria-label={t('memoire.dates')}>
+                <span class="absolute inset-x-2 top-1/2 h-0.5 -translate-y-1/2 bg-mer-700/25" aria-hidden="true"></span>
+                {p.data.photos.map((ph, j) => (
+                  <button type="button" data-goto={j} class="group relative flex flex-col items-center gap-1 px-1" aria-pressed="false">
+                    <span class="h-4 w-4 rounded-full border-2 border-mer-700 bg-chaux group-aria-pressed:border-azur-900 group-aria-pressed:bg-soleil-500"></span>
+                    <span class="absolute top-6 whitespace-nowrap text-xs font-semibold text-mer-900/70 group-aria-pressed:text-mer-900">{ph.year}</span>
+                  </button>
+                ))}
+                {!p.hasToday && (
+                  <button type="button" data-goto={p.data.photos.length} class="group relative flex flex-col items-center gap-1 px-1" aria-pressed="false">
+                    <span class="h-4 w-4 rounded-full border-2 border-dashed border-mer-700 bg-ciel-100 group-aria-pressed:bg-soleil-500"></span>
+                    <span class="absolute top-6 whitespace-nowrap text-xs font-semibold text-mer-900/70">{t('memoire.now')}</span>
+                  </button>
+                )}
+              </div>
+              <button type="button" data-next class="grid h-11 w-11 shrink-0 place-items-center rounded-full border-2 border-mer-700 text-mer-700 hover:bg-mer-700 hover:text-white disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-mer-700" aria-label={t('memoire.next')}>
+                <span aria-hidden="true" class="inline-block rtl:-scale-x-100">→</span>
+              </button>
+            </div>
+
+            {p.ficheHref && <a href={p.ficheHref} class="mt-10 inline-block font-semibold text-mer-700 underline underline-offset-4 hover:text-mer-900">{t('memoire.fiche')}</a>}
+          </article>
+        );
+      })}
+    </div>
+  </section>
+</Base>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-memoire]').forEach((root) => {
+    const places = [...root.querySelectorAll<HTMLElement>('[data-place]')];
+    const choosers = [...root.querySelectorAll<HTMLAnchorElement>('[data-choose]')];
+    const map = root.querySelector<HTMLElement>('.leaflet-map');
+    if (places.length === 0) return;
+
+    // Une série : une photo visible à la fois, réglette et flèches.
+    places.forEach((place) => {
+      const slots = [...place.querySelectorAll<HTMLElement>('[data-slot]')];
+      const dots = [...place.querySelectorAll<HTMLButtonElement>('[data-goto]')];
+      const prev = place.querySelector<HTMLButtonElement>('[data-prev]');
+      const next = place.querySelector<HTMLButtonElement>('[data-next]');
+      const controls = place.querySelector<HTMLElement>('[data-controls]');
+      let current = 0;
+      const show = (i: number) => {
+        current = Math.max(0, Math.min(slots.length - 1, i));
+        slots.forEach((s, k) => s.toggleAttribute('hidden', k !== current));
+        dots.forEach((d, k) => d.setAttribute('aria-pressed', String(k === current)));
+        if (prev) prev.disabled = current === 0;
+        if (next) next.disabled = current === slots.length - 1;
+      };
+      controls?.classList.replace('hidden', 'flex');
+      prev?.addEventListener('click', () => show(current - 1));
+      next?.addEventListener('click', () => show(current + 1));
+      dots.forEach((d) => d.addEventListener('click', () => show(Number(d.dataset.goto))));
+      place.addEventListener('keydown', (e) => {
+        if (!(e.target as HTMLElement).closest('[data-controls]')) return;
+        const rtl = document.documentElement.dir === 'rtl';
+        if (e.key === 'ArrowRight') show(current + (rtl ? -1 : 1));
+        else if (e.key === 'ArrowLeft') show(current + (rtl ? 1 : -1));
+        else return;
+        e.preventDefault();
+      });
+      show(0);
+    });
+
+    // Un lieu affiché à la fois, choisi sur la carte ou dans la liste.
+    const select = (slug: string, scroll = false) => {
+      places.forEach((p) => p.toggleAttribute('hidden', p.dataset.place !== slug));
+      choosers.forEach((c) => c.setAttribute('aria-current', String(c.dataset.choose === slug)));
+      map?.dispatchEvent(new CustomEvent('map:highlight', { detail: slug }));
+      const place = places.find((p) => p.dataset.place === slug);
+      // Sur petit écran, la série est sous la carte : on y descend.
+      if (scroll && place && window.matchMedia('(max-width: 1023px)').matches) place.scrollIntoView({ block: 'start' });
+    };
+    choosers.forEach((c) => c.addEventListener('click', (e) => { e.preventDefault(); select(c.dataset.choose!, true); }));
+    root.addEventListener('map:select', (e) => select((e as CustomEvent<string>).detail, true));
+
+    const fromHash = location.hash.replace('#lieu-', '');
+    // La carte charge Leaflet de façon asynchrone : on attend une image avant de surligner son marqueur.
+    requestAnimationFrame(() => select(places.some((p) => p.dataset.place === fromHash) ? fromHash : places[0].dataset.place!));
+  });
+</script>

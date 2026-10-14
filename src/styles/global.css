@@ -98,6 +98,18 @@
 
 /* Carte Leaflet */
 .leaflet-container { font-family: inherit; }
+.marker-num {
+  width: 30px; height: 30px; border-radius: 50%;
+  display: grid; place-items: center;
+  font: 700 14px/1 var(--font-sans);
+  background: var(--color-chaux); color: var(--color-mer-900);
+  border: 2px solid var(--color-mer-700);
+  cursor: pointer;
+}
+.marker-num.is-active {
+  background: var(--color-soleil-500);
+  border-color: var(--color-azur-900);
+}
 .marker-pin {
   width: 18px; height: 18px; border-radius: 50%;
   background: var(--color-soleil-500);

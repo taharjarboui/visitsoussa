@@ -80,6 +80,28 @@ const business = defineCollection({
   }),
 });
 
+// « Sousse au fil du temps » : un lieu par fichier, avec sa série de photos de la plus ancienne à la plus récente.
+// Une photo n'est publiée qu'avec une source (credit) et une licence vérifiées.
+const memoire = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/memoire' }),
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    lat: z.number(),
+    lng: z.number(),
+    lieu: z.string().optional(), // slug de la fiche lieu liée
+    order: z.number().default(100),
+    photos: z.array(z.object({
+      src: z.string(),
+      date: z.string(), // libellé affiché, ex. "Vers 1905"
+      year: z.number(), // sert à l'ordre de la série
+      legende: z.string(),
+      credit: z.string(),
+      licence: z.string(),
+    })).min(1),
+  }),
+});
+
 // La frise « Histoire de Sousse » (/fr/decouvrir/histoire) : une entrée par période.
 const histoire = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/histoire' }),
@@ -93,4 +115,4 @@ const histoire = defineCollection({
   }),
 });
 
-export const collections = { lieux, experiences, evenements, pratique, histoire, business };
+export const collections = { lieux, experiences, evenements, pratique, histoire, business, memoire };

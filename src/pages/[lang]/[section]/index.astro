@@ -3,8 +3,8 @@ import Base from '../../../layouts/Base.astro';
 import Card from '../../../components/Card.astro';
 import Map from '../../../components/Map.astro';
 import { languages, sections, type Lang, type SectionKey } from '../../../i18n/ui';
-import { useTranslations, sectionUrl, splitId, formatDate, historyUrl } from '../../../i18n/utils';
-import { entriesFor, sectionAlternates, historyLangs } from '../../../lib/content';
+import { useTranslations, sectionUrl, splitId, formatDate, historyUrl, memoireUrl } from '../../../i18n/utils';
+import { entriesFor, sectionAlternates, historyLangs, memoireLangs } from '../../../lib/content';
 
 export function getStaticPaths() {
   const paths = [];
@@ -24,6 +24,7 @@ const entries = await entriesFor(collection, lang);
 const title = t(`section.${key}.title`);
 const intro = t(`section.${key}.intro`);
 const showHistory = key === 'decouvrir' && (await historyLangs()).includes(lang);
+const showMemoire = key === 'decouvrir' && (await memoireLangs()).includes(lang);
 
 const markers = key === 'decouvrir'
   ? entries.filter((e: any) => e.data.lat && e.data.lng).map((e: any) => ({ lat: e.data.lat, lng: e.data.lng, title: e.data.title, href: sectionUrl(lang, key, splitId(e.id).slug) }))
@@ -41,15 +42,24 @@ function meta(e: any): string | undefined {
     <p class="mt-4 max-w-2xl text-xl leading-relaxed text-mer-900/75">{intro}</p>
   </section>
 
-  {showHistory && (
-    <section class="container-x pb-12">
-      <a href={historyUrl(lang)} class="group flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-azur-900 px-6 py-6 text-chaux transition-colors hover:bg-azur-700 md:px-8">
+  {(showHistory || showMemoire) && (
+    <section class="container-x grid gap-4 pb-12 md:grid-cols-2">
+      {showHistory && <a href={historyUrl(lang)} class="group flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-azur-900 px-6 py-6 text-chaux transition-colors hover:bg-azur-700 md:px-8">
         <span>
           <span class="block font-display text-3xl">{t('history.title')}</span>
           <span class="mt-1 block text-chaux/80">{t('history.teaser')}</span>
         </span>
         <span class="font-semibold text-soleil-500">{t('history.link')} <span aria-hidden="true" class="inline-block rtl:-scale-x-100">→</span></span>
-      </a>
+      </a>}
+      {showMemoire && (
+        <a href={memoireUrl(lang)} class="group flex flex-wrap items-center justify-between gap-4 rounded-2xl border-2 border-azur-900 px-6 py-6 text-mer-900 transition-colors hover:bg-ciel-100 md:px-8">
+          <span>
+            <span class="block font-display text-3xl">{t('memoire.title')}</span>
+            <span class="mt-1 block text-mer-900/75">{t('memoire.teaser')}</span>
+          </span>
+          <span class="font-semibold text-mer-700">{t('memoire.link')} <span aria-hidden="true" class="inline-block rtl:-scale-x-100">→</span></span>
+        </a>
+      )}
     </section>
   )}
 

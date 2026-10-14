@@ -1,4 +1,4 @@
-import { ui, defaultLang, rtlLangs, sections, languages, historyPath, type Lang, type UiKey, type SectionKey } from './ui';
+import { ui, defaultLang, rtlLangs, sections, languages, historyPath, memoirePath, type Lang, type UiKey, type SectionKey } from './ui';
 
 export function isLang(value: string | undefined): value is Lang {
   return value !== undefined && value in languages;
@@ -51,4 +51,8 @@ export function contactUrl(lang: Lang) {
 
 export function historyUrl(lang: Lang) {
   return sectionUrl(lang, 'decouvrir', historyPath[lang]);
+}
+
+export function memoireUrl(lang: Lang) {
+  return sectionUrl(lang, 'decouvrir', memoirePath[lang]);
 }

@@ -35,6 +35,7 @@ Le squelette a été créé dans une session Claude (chat) puis déposé ici. Ce
 - Frise « Histoire de Sousse » : collection `histoire` (une entrée par période, triée par `year`), page `/fr/decouvrir/histoire` (`/en/discover/history`, `/ar/discover/history`), générée seulement dans les langues qui ont du contenu. Rattachée à Découvrir, pas au menu principal. FR seulement pour l'instant.
 - Sport : catégorie `sport` de la collection `experiences` (rubrique À faire), fiche d'ensemble `sport.md`, tuile « Sport » sur l'accueil. Les événements sportifs vont dans `evenements`.
 - Rubrique « Sousse Business » (`/fr/business`) : collection `business` (catégories investir, congres, travailler, reseau). Hors menu principal : lien discret dans l'en-tête (écrans larges), le menu mobile et le pied de page.
+- « Sousse au fil du temps » (`/fr/decouvrir/sousse-au-fil-du-temps`) : collection `memoire` (un lieu par fichier, série de photos triée par `year`), carte Leaflet à marqueurs numérotés + réglette chronologique ; un emplacement « Aujourd'hui » s'affiche tant qu'aucune photo récente (≥ 2000) n'existe. Photos anciennes dans `public/images/memoire/`, originaux dans `../sources/photos-anciennes/`. Publiées le 14 octobre 2026 à la demande du porteur de projet avec dates estimées et licences « À vérifier » : chaque photo doit encore recevoir sa source et sa licence réelles.
 - Pas encore : CMS, rubrique « Manger & boire », analytics.
 
 ## Décisions prises

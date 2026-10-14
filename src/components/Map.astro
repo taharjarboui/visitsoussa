@@ -1,6 +1,8 @@
 ---
-/** Carte Leaflet + OpenStreetMap. Les marqueurs sont passés en JSON, Leaflet n'est chargé que côté client. */
-export interface Marker { lat: number; lng: number; title: string; href?: string }
+/** Carte Leaflet + OpenStreetMap. Les marqueurs sont passés en JSON, Leaflet n'est chargé que côté client.
+ *  Un marqueur avec `id` est « sélectionnable » : il affiche son `label` (un numéro), n'ouvre pas de bulle,
+ *  et un clic émet l'événement `map:select` (detail = id). La page peut renvoyer `map:highlight` pour le mettre en avant. */
+export interface Marker { lat: number; lng: number; title: string; href?: string; id?: string; label?: string }
 interface Props { markers: Marker[]; center?: [number, number]; zoom?: number; class?: string }
 const { markers, center = [35.835, 10.63], zoom = 13, class: cls = 'h-[420px]' } = Astro.props;
 ---
@@ -15,7 +17,7 @@ const { markers, center = [35.835, 10.63], zoom = 13, class: cls = 'h-[420px]' }
   import 'leaflet/dist/leaflet.css';
 
   document.querySelectorAll<HTMLElement>('.leaflet-map').forEach((el) => {
-    const markers = JSON.parse(el.dataset.markers ?? '[]') as { lat: number; lng: number; title: string; href?: string }[];
+    const markers = JSON.parse(el.dataset.markers ?? '[]') as { lat: number; lng: number; title: string; href?: string; id?: string; label?: string }[];
     const center = JSON.parse(el.dataset.center ?? '[35.835,10.63]') as [number, number];
     const zoom = Number(el.dataset.zoom ?? 13);
 
@@ -27,11 +29,26 @@ const { markers, center = [35.835, 10.63], zoom = 13, class: cls = 'h-[420px]' }
 
     const icon = L.divIcon({ className: '', html: '<div class="marker-pin"></div>', iconSize: [18, 18], iconAnchor: [9, 9] });
     const group = L.featureGroup();
+    const pins = new Map<string, L.Marker>();
     for (const m of markers) {
+      if (m.id) {
+        const numbered = L.divIcon({ className: '', html: `<div class="marker-num" data-pin="${m.id}">${m.label ?? ''}</div>`, iconSize: [30, 30], iconAnchor: [15, 15] });
+        const pin = L.marker([m.lat, m.lng], { icon: numbered, title: m.title, keyboard: true }).addTo(group);
+        pin.on('click', () => el.dispatchEvent(new CustomEvent('map:select', { detail: m.id, bubbles: true })));
+        pins.set(m.id, pin);
+        continue;
+      }
       const label = m.href ? `<a href="${m.href}"><strong>${m.title}</strong></a>` : `<strong>${m.title}</strong>`;
       L.marker([m.lat, m.lng], { icon }).bindPopup(label).addTo(group);
     }
     group.addTo(map);
     if (markers.length > 1) map.fitBounds(group.getBounds().pad(0.2));
+
+    el.addEventListener('map:highlight', (e) => {
+      const id = (e as CustomEvent<string>).detail;
+      el.querySelectorAll('.marker-num').forEach((n) => n.classList.toggle('is-active', (n as HTMLElement).dataset.pin === id));
+      const pin = pins.get(id);
+      if (pin) pin.setZIndexOffset(1000);
+    });
   });
 </script>

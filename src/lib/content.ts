@@ -1,6 +1,6 @@
 import { getCollection, type CollectionKey, type CollectionEntry } from 'astro:content';
 import { languages, type Lang, type SectionKey } from '../i18n/ui';
-import { splitId, sectionUrl, homeUrl, contactUrl, historyUrl } from '../i18n/utils';
+import { splitId, sectionUrl, homeUrl, contactUrl, historyUrl, memoireUrl } from '../i18n/utils';
 
 /** Entrées d'une collection pour une langue, triées par `order` puis titre. */
 export async function entriesFor<C extends CollectionKey>(collection: C, lang: Lang) {
@@ -43,6 +43,25 @@ export async function historyLangs() {
 export async function historyAlternates() {
   const alternates: Partial<Record<Lang, string>> = {};
   for (const l of await historyLangs()) alternates[l] = historyUrl(l);
+  return alternates;
+}
+
+/** Lieux de « Sousse au fil du temps » pour une langue ; chaque série de photos est triée de la plus ancienne à la plus récente. */
+export async function memoireFor(lang: Lang) {
+  const all = await getCollection('memoire', (e) => splitId(e.id).lang === lang);
+  return all
+    .sort((a, b) => (a.data.order - b.data.order) || a.data.title.localeCompare(b.data.title))
+    .map((e) => ({ ...e, data: { ...e.data, photos: [...e.data.photos].sort((p, q) => p.year - q.year) } }));
+}
+
+export async function memoireLangs() {
+  const all = await getCollection('memoire');
+  return [...new Set(all.map((e) => splitId(e.id).lang))];
+}
+
+export async function memoireAlternates() {
+  const alternates: Partial<Record<Lang, string>> = {};
+  for (const l of await memoireLangs()) alternates[l] = memoireUrl(l);
   return alternates;
 }
 
