@@ -32,9 +32,9 @@ npm run preview    # teste le build
 
 ## Déploiement
 
-Hébergé sur Vercel : chaque push sur `main` redéploie (commande `npm run build`). Domaine `www.visitsoussa.com`, DNS gérés chez OVH. La redirection `/` → `/fr/` est définie dans `astro.config.mjs` (`redirects`).
+Hébergé sur Cloudflare (Workers & Pages, adaptateur `@astrojs/cloudflare`) : chaque push redéploie (commande `npm run build`, puis `npx wrangler deploy`). Réglages détaillés dans [docs/deploiement-cloudflare.md](docs/deploiement-cloudflare.md). Domaine `www.visitsoussa.com`, DNS gérés chez OVH. La redirection `/` → `/fr/` est définie dans `astro.config.mjs` (`redirects`).
 
-Le site est statique, sauf `/api/contact` ([src/pages/api/contact.ts](src/pages/api/contact.ts)) : une fonction Vercel qui reçoit le formulaire de contact et l'envoie par e-mail via Resend. Elle lit trois variables d'environnement, à définir dans Vercel → Settings → Environment Variables (voir `.env.example`) :
+Le site est statique, sauf `/api/contact` ([src/pages/api/contact.ts](src/pages/api/contact.ts)) : un Cloudflare Worker qui reçoit le formulaire de contact et l'envoie par e-mail via Resend. Elle lit trois variables d'environnement, à définir dans Cloudflare → Workers & Pages → visit-soussa → Settings → Variables and Secrets (voir `.env.example`) :
 
 | Variable | Rôle |
 |---|---|

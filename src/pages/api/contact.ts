@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro';
 import { RESEND_API_KEY, CONTACT_TO, CONTACT_FROM } from 'astro:env/server';
 import { isLang, contactUrl } from '../../i18n/utils';
 
-// Seule route exécutée côté serveur (fonction Vercel) : reçoit le formulaire de contact
+// Seule route exécutée côté serveur (Cloudflare Worker) : reçoit le formulaire de contact
 // et l'envoie par e-mail via l'API Resend. La clé ne quitte jamais le serveur.
 export const prerender = false;
 

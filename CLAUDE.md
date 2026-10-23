@@ -6,7 +6,7 @@ Site vitrine pour promouvoir Sousse (Tunisie) auprès des touristes. Objectif : 
 Développeur full-stack **et** copywriter touristique. Les textes doivent être précis (dates, lieux vérifiés), chaleureux, sans superlatifs creux. En cas de doute sur un fait historique, le signaler avec « (à confirmer) » plutôt que d'inventer.
 
 ## Stack
-Astro (statique, adaptateur `@astrojs/vercel` pour la seule route serveur `/api/contact`) + Tailwind CSS v4 (tokens dans `src/styles/global.css`, pas de `tailwind.config`) + Leaflet/OSM. Pas de framework UI (pas de React) sauf besoin réel. Contenu en Markdown dans `src/content/`, validé par `src/content.config.ts`.
+Astro (statique, adaptateur `@astrojs/cloudflare` pour la seule route serveur `/api/contact`) + Tailwind CSS v4 (tokens dans `src/styles/global.css`, pas de `tailwind.config`) + Leaflet/OSM. Pas de framework UI (pas de React) sauf besoin réel. Contenu en Markdown dans `src/content/`, validé par `src/content.config.ts`.
 
 ## Multilingue
 Trois langues : `fr` (défaut), `en`, `ar` (RTL). Tout texte d'interface passe par `src/i18n/ui.ts`, jamais en dur dans les composants. Les URL sont préfixées par la langue (`/fr/…`) ; les segments de rubrique sont définis dans `sections` de `ui.ts`. Utiliser les propriétés logiques CSS (`ps-`, `ms-`, `start-`) pour que l'arabe fonctionne.
@@ -30,6 +30,7 @@ Le squelette a été créé dans une session Claude (chat) puis déposé ici. Ce
 - 19 fiches FR (9 lieux, 4 expériences, 3 événements, 3 pratiques), 6 EN, 3 AR. Beaucoup de champs sont marqués « (à confirmer) » : horaires, tarifs, dates de festivals.
 - 4 photos basse résolution dans `public/images/` (kobba, boujaafar, oliviers, remparts) : des placeholders, à remplacer par des photos haute résolution.
 - Dépôt Git : https://github.com/taharjarboui/visitsoussa (branche `main`).
+- Branche `cloudflare` (23 octobre 2026) : bascule de Vercel vers Cloudflare Workers & Pages, réglages dans `docs/deploiement-cloudflare.md`. Tant qu'elle n'est pas fusionnée dans `main`, la production reste sur Vercel.
 - Hébergé sur Vercel (offre Hobby), domaine `www.visitsoussa.com` (principal ; `visitsoussa.com` redirige vers `www` côté Vercel ; DNS chez OVH). Chaque push sur `main` redéploie.
 - Formulaire de contact (`/<lang>/contact`) → `/api/contact` → e-mail via Resend. Aucune adresse e-mail affichée sur le site. Variables `RESEND_API_KEY`, `CONTACT_TO`, `CONTACT_FROM` dans Vercel.
 - Frise « Histoire de Sousse » : collection `histoire` (une entrée par période, triée par `year`), page `/fr/decouvrir/histoire` (`/en/discover/history`, `/ar/discover/history`), générée seulement dans les langues qui ont du contenu. Rattachée à Découvrir, pas au menu principal. FR seulement pour l'instant.
