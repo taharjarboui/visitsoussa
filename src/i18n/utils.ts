@@ -45,6 +45,10 @@ export function formatDate(date: Date, lang: Lang) {
   return new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long', year: 'numeric' }).format(date);
 }
 
+// Interrupteur du formulaire de contact. false : la page affiche un message à la place du formulaire,
+// /api/contact refuse tout envoi et le lien du pied de page disparaît. Remettre à true pour rouvrir.
+export const contactOpen = false;
+
 export function contactUrl(lang: Lang) {
   return `/${lang}/contact`;
 }

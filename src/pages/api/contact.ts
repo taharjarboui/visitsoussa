@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { RESEND_API_KEY, CONTACT_TO, CONTACT_FROM } from 'astro:env/server';
-import { isLang, contactUrl } from '../../i18n/utils';
+import { isLang, contactUrl, contactOpen } from '../../i18n/utils';
 
 // Seule route exécutée côté serveur (fonction Vercel) : reçoit le formulaire de contact
 // et l'envoie par e-mail via l'API Resend. La clé ne quitte jamais le serveur.
@@ -14,6 +14,9 @@ function field(data: FormData, name: keyof typeof LIMITS) {
 }
 
 export const POST: APIRoute = async ({ request, redirect }) => {
+  // Formulaire fermé (contactOpen dans i18n/utils.ts) : aucun e-mail ne part, même envoyé directement.
+  if (!contactOpen) return new Response(null, { status: 503 });
+
   const wantsJson = request.headers.get('accept')?.includes('application/json');
   let data: FormData;
   try {
